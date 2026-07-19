@@ -32,6 +32,23 @@
   <a class="stat-card" href="/admin/bilder"><strong><%= counts.images %></strong><span>Opplastede bilder</span></a>
 </div>
 
+<% if (latestMessages && latestMessages.length) { %>
+<section class="admin-card">
+  <h2>Siste meldinger</h2>
+  <ul class="latest-messages">
+    <% latestMessages.forEach(function (m) { %>
+      <li>
+        <span class="pill"><%= m.kind === 'kontakt' ? 'Kontakt' : 'Kundeklubb' %></span>
+        <strong><%= m.data.navn || '–' %></strong>
+        <span class="latest-msg-text"><%= (m.data.melding || m.data.epost || '').slice(0, 80) %></span>
+        <time datetime="<%= m.created_at %>"><%= new Date(m.created_at).toLocaleDateString('nb-NO') %></time>
+      </li>
+    <% }) %>
+  </ul>
+  <a class="admin-btn" href="/admin/meldinger">Se alle meldinger</a>
+</section>
+<% } %>
+
 <section class="admin-card">
   <h2>Slik henger det sammen</h2>
   <ul class="admin-list">

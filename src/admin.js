@@ -86,6 +86,7 @@ module.exports = function adminRouter(app) {
     res.render('admin/dashboard', {
       counts: { products: products.length, campaigns: campaigns.length, messages: messages.length, images: images.length },
       notice: res.locals.notice,
+      latestMessages: messages.slice(0, 3),
     });
   });
 

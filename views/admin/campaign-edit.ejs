@@ -36,9 +36,17 @@
     </div>
     <fieldset class="field" data-scope-panel="produkter" <%= c && c.scope.type === 'produkter' ? '' : 'hidden' %>>
       <legend>Velg produkter</legend>
-      <div class="check-grid">
+      <p class="select-all-row">
+        <button type="button" class="admin-btn" data-check-all>Velg alle</button>
+        <button type="button" class="admin-btn" data-check-none>Fjern alle</button>
+      </p>
+      <div class="check-grid check-grid-thumbs" data-check-grid>
         <% products.forEach(function (p) { %>
-          <label><input type="checkbox" name="scopeSlugs" value="<%= p.slug %>" <%= c && (c.scope.slugs || []).includes(p.slug) ? 'checked' : '' %>> <%= p.name %></label>
+          <label class="check-thumb">
+            <input type="checkbox" name="scopeSlugs" value="<%= p.slug %>" <%= c && (c.scope.slugs || []).includes(p.slug) ? 'checked' : '' %>>
+            <img src="<%= p.image && p.image.startsWith('/media/') ? p.image : (p.image ? p.image + '-300.jpg' : '/images/logo-icon.svg') %>" alt="" width="36" height="36" loading="lazy">
+            <span><%= p.name %></span>
+          </label>
         <% }) %>
       </div>
     </fieldset>

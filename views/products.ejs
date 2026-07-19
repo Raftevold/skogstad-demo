@@ -21,6 +21,17 @@
     <% if (products.length === 0) { %>
       <p>Ingen produkter i denne kategorien ennå.</p>
     <% } else { %>
+      <div class="list-toolbar">
+        <p class="list-count"><%= products.length %> produkter</p>
+        <form method="get" class="sort-form">
+          <label for="sortering">Sorter:</label>
+          <select id="sortering" name="sortering" data-auto-submit>
+            <option value="" <%= !sortering ? 'selected' : '' %>>Anbefalt</option>
+            <option value="pris-lav" <%= sortering === 'pris-lav' ? 'selected' : '' %>>Pris: lav–høy</option>
+            <option value="pris-hoy" <%= sortering === 'pris-hoy' ? 'selected' : '' %>>Pris: høy–lav</option>
+          </select>
+        </form>
+      </div>
       <div class="product-grid">
         <% products.forEach(function (p) { %>
           <%- include('partials/product-card', { p, pr: prices[p.slug] }) %>

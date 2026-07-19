@@ -8,6 +8,8 @@
     </div>
     <div class="field"><label for="v-text">Tekst</label><input id="v-text" name="text" value="<%= notice.text %>" maxlength="200"></div>
     <div class="field"><label for="v-link">Lenke (valgfri, f.eks. /produkter eller /aktuelt/feriestengt)</label><input id="v-link" name="link" value="<%= notice.link %>"></div>
+    <p class="field-hint">Slik vil linjen se ut:</p>
+    <div class="notice-preview" data-notice-preview aria-hidden="true"><%= notice.text || 'Varselteksten din her' %></div>
     <button class="admin-btn admin-btn-primary" type="submit">Lagre varsellinje</button>
   </form>
 </section>

@@ -21,6 +21,7 @@
         <figcaption>
           <code>/media/<%= img.name %></code>
           <span><%= Math.round(img.size / 1024) %> kB</span>
+          <button type="button" class="admin-btn" data-copy="/media/<%= img.name %>">Kopier adresse</button>
           <form method="post" action="/admin/bilder/<%= encodeURIComponent(img.name) %>/slett" data-confirm="Slette bildet?">
             <button class="admin-btn admin-btn-danger" type="submit">Slett</button>
           </form>

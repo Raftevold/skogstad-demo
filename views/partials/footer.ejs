@@ -57,6 +57,16 @@
   <a class="btn btn-small" href="/cookie-ok">Ok</a>
 </div>
 <% } %>
+<div class="search-overlay" data-search-overlay hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Produktsøk">
+    <div class="search-input-row">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.5-5.5"/></svg>
+      <input type="search" data-search-input placeholder="Søk etter produkt, farge eller kategori …" aria-label="Søk i produkter" autocomplete="off">
+      <button class="btn btn-small btn-secondary" data-close-search>Lukk</button>
+    </div>
+    <div class="search-results" data-search-results aria-live="polite"></div>
+  </div>
+</div>
 <div class="toast" data-toast role="status" aria-live="polite" hidden></div>
 <script src="/js/main.js" defer></script>
 </body>

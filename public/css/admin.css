@@ -246,6 +246,36 @@ a { color: #1f5236; }
 .admin-list { padding-left: 20px; }
 .admin-list li { margin-bottom: 8px; }
 
+/* ---------- Polering v3 ---------- */
+.notice-preview {
+  background: var(--a-green); color: #fff; text-align: center; font-weight: 600;
+  padding: 9px 16px; border-radius: 8px; margin: 6px 0 16px;
+}
+.select-all-row { display: flex; gap: 8px; margin: 0 0 10px; }
+.check-grid-thumbs { gap: 8px; }
+.check-thumb {
+  display: flex; align-items: center; gap: 10px; padding: 6px 8px;
+  border: 1.5px solid var(--a-line); border-radius: 9px; cursor: pointer; font-size: 0.88rem;
+}
+.check-thumb:hover { border-color: var(--a-green-mid); }
+.check-thumb:has(input:checked) { border-color: var(--a-green); background: #f2f7f3; }
+.check-thumb img { border-radius: 6px; object-fit: cover; background: #f4f2ee; flex-shrink: 0; }
+.check-thumb input { accent-color: var(--a-green); }
+.table-filter { max-width: 380px; margin-bottom: 12px; }
+.sr-only-admin { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.latest-messages { list-style: none; margin: 0 0 14px; padding: 0; }
+.latest-messages li {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  padding: 9px 0; border-bottom: 1px solid #f0f2ef; font-size: 0.92rem;
+}
+.latest-messages .pill { margin-left: 0; }
+.latest-msg-text { color: var(--a-muted); flex: 1; min-width: 160px; }
+.latest-messages time { color: var(--a-muted); font-size: 0.82rem; }
+.char-counter { font-size: 0.78rem; color: var(--a-muted); text-align: right; margin-top: 3px; }
+.char-counter.is-over { color: #93271b; font-weight: 700; }
+.admin-flash { animation: flash-fade 0.4s ease 3.2s forwards; }
+@keyframes flash-fade { to { opacity: 0; visibility: hidden; } }
+
 /* ---------- Innlogging ---------- */
 .admin-login-body { display: flex; min-height: 100vh; align-items: center; justify-content: center; background: #12241a; }
 .admin-login { background: #fff; border-radius: 14px; padding: 40px; width: min(380px, 92vw); text-align: center; }

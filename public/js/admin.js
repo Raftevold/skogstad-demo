@@ -167,6 +167,82 @@ if (pickerModal) {
   }
 }
 
+/* ---------- Vakt mot ulagra endringar ---------- */
+(function () {
+  let dirty = false;
+  document.querySelectorAll('form[method="post"], form.product-form').forEach((form) => {
+    form.addEventListener('input', () => { dirty = true; });
+    form.addEventListener('submit', () => { dirty = false; });
+  });
+  window.addEventListener('beforeunload', (e) => {
+    if (dirty) { e.preventDefault(); e.returnValue = ''; }
+  });
+})();
+
+/* ---------- Velg alle / ingen (kampanjeprodukt) ---------- */
+(function () {
+  const grid = document.querySelector('[data-check-grid]');
+  if (!grid) return;
+  const setAll = (val) => grid.querySelectorAll('input[type="checkbox"]').forEach((c) => { c.checked = val; });
+  const all = document.querySelector('[data-check-all]');
+  const none = document.querySelector('[data-check-none]');
+  if (all) all.addEventListener('click', () => setAll(true));
+  if (none) none.addEventListener('click', () => setAll(false));
+})();
+
+/* ---------- Filtrer tabell (produktlista) ---------- */
+(function () {
+  const input = document.querySelector('[data-table-filter]');
+  if (!input) return;
+  const rows = [...document.querySelectorAll('.admin-table tbody tr')];
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    rows.forEach((row) => {
+      row.hidden = q !== '' && !row.textContent.toLowerCase().includes(q);
+    });
+  });
+})();
+
+/* ---------- Teiknteljarar (SEO) ---------- */
+(function () {
+  document.querySelectorAll('.seo-block input, .seo-block textarea').forEach((field) => {
+    const limit = field.tagName === 'TEXTAREA' ? 155 : 60;
+    const counter = document.createElement('p');
+    counter.className = 'char-counter';
+    field.after(counter);
+    const update = () => {
+      counter.textContent = `${field.value.length} / ~${limit} tegn`;
+      counter.classList.toggle('is-over', field.value.length > limit);
+    };
+    field.addEventListener('input', update);
+    update();
+  });
+})();
+
+/* ---------- Live førehandsvising av varsellinja ---------- */
+(function () {
+  const preview = document.querySelector('[data-notice-preview]');
+  const textField = document.getElementById('v-text');
+  if (!preview || !textField) return;
+  textField.addEventListener('input', () => {
+    preview.textContent = textField.value || 'Varselteksten din her';
+  });
+})();
+
+/* ---------- Kopier adresse (bildebiblioteket) ---------- */
+document.querySelectorAll('[data-copy]').forEach((btn) => {
+  btn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(btn.dataset.copy);
+      const orig = btn.textContent;
+      btn.textContent = 'Kopiert ✓';
+      setTimeout(() => { btn.textContent = orig; }, 1600);
+    } catch {
+      window.prompt('Kopier adressen:', btn.dataset.copy);
+    }
+  });
+});
+
 /* ---------- Tema ---------- */
 const themeForm = document.querySelector('[data-theme-form]');
 if (themeForm) {

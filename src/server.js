@@ -127,14 +127,21 @@ const CATEGORIES = {
   barn: 'Barn 1–8 år', junior: 'Junior 10–16 år', dame: 'Dame', herre: 'Herre',
 };
 
+function sortProducts(products, prices, sortering) {
+  if (sortering === 'pris-lav') return [...products].sort((a, b) => prices[a.slug].final - prices[b.slug].final);
+  if (sortering === 'pris-hoy') return [...products].sort((a, b) => prices[b.slug].final - prices[a.slug].final);
+  return products;
+}
+
 app.get('/produkter', async (req, res, next) => {
   try {
-    const products = await store.listProducts();
+    const all = await store.listProducts();
     const campaigns = await store.listCampaigns();
-    const prices = priceMap(products, res.locals.tier, campaigns, res.locals.club);
+    const prices = priceMap(all, res.locals.tier, campaigns, res.locals.club);
+    const products = sortProducts(all, prices, req.query.sortering);
     res.render('products', {
       ...seo(res, 'produkter'), products, prices, categories: CATEGORIES,
-      activeCategory: null, heading: 'Alle produkter',
+      activeCategory: null, heading: 'Alle produkter', sortering: req.query.sortering || '',
     });
   } catch (e) { next(e); }
 });
@@ -144,12 +151,37 @@ app.get('/produkter/:kategori', async (req, res, next) => {
     const kat = req.params.kategori;
     if (!CATEGORIES[kat]) return next();
     const all = await store.listProducts();
-    const products = all.filter((p) => p.category === kat);
+    const inCat = all.filter((p) => p.category === kat);
     const campaigns = await store.listCampaigns();
-    const prices = priceMap(products, res.locals.tier, campaigns, res.locals.club);
+    const prices = priceMap(inCat, res.locals.tier, campaigns, res.locals.club);
+    const products = sortProducts(inCat, prices, req.query.sortering);
     res.render('products', {
       ...seo(res, 'produkter'), title: `${CATEGORIES[kat]} | Skogstad Sport`,
       products, prices, categories: CATEGORIES, activeCategory: kat, heading: CATEGORIES[kat],
+      sortering: req.query.sortering || '',
+    });
+  } catch (e) { next(e); }
+});
+
+// Produktsøk (til søk-overlayet i headeren)
+app.get('/api/sok', async (req, res, next) => {
+  try {
+    const q = String(req.query.q || '').trim().toLowerCase();
+    if (q.length < 2) return res.json({ ok: true, results: [] });
+    const all = await store.listProducts();
+    const campaigns = await store.listCampaigns();
+    const hits = all.filter((p) => {
+      const hay = `${p.name} ${p.subtitle} ${p.color} ${CATEGORIES[p.category] || ''}`.toLowerCase();
+      return q.split(/\s+/).every((word) => hay.includes(word));
+    }).slice(0, 8);
+    const prices = priceMap(hits, res.locals.tier, campaigns, res.locals.club);
+    res.json({
+      ok: true,
+      results: hits.map((p) => ({
+        slug: p.slug, name: p.name, color: p.color, image: p.image,
+        category: CATEGORIES[p.category] || p.category,
+        price: prices[p.slug].final, ordinary: prices[p.slug].ordinary,
+      })),
     });
   } catch (e) { next(e); }
 });
@@ -164,11 +196,15 @@ app.get('/produkt/:slug', async (req, res, next) => {
     const tierPrices = {};
     for (const t of VALID_TIERS) tierPrices[t] = resolvePrice(product, t, campaigns, res.locals.club);
     const anonPrice = resolvePrice(product, null, campaigns, res.locals.club);
+    // «Flere fra kategorien» — same kategori, utan produktet sjølv
+    const all = await store.listProducts();
+    const related = all.filter((p) => p.category === product.category && p.slug !== product.slug).slice(0, 4);
+    const relatedPrices = priceMap(related, res.locals.tier, campaigns, res.locals.club);
     res.render('product', {
       ...seo(res, 'produkter'),
       title: `${product.name} | Skogstad Sport`,
       description: (product.description || '').slice(0, 155),
-      product, price, tierPrices, anonPrice, categories: CATEGORIES,
+      product, price, tierPrices, anonPrice, categories: CATEGORIES, related, relatedPrices,
     });
   } catch (e) { next(e); }
 });

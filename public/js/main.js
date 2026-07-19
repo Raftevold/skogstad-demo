@@ -2,7 +2,7 @@
 document.documentElement.classList.add('js');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* ---------- Scroll-avsløring (kun transform/opacity) ---------- */
+/* ---------- Scroll-avsløring med stega forsinking (kun transform/opacity) ---------- */
 (function () {
   const els = document.querySelectorAll('.reveal');
   if (!els.length) return;
@@ -12,7 +12,16 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
   }
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
-      if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      // Stega forsinking: søsken i same rutenett kjem eitt og eitt
+      const siblings = [...el.parentElement.children].filter((c) => c.classList.contains('reveal'));
+      const idx = siblings.indexOf(el);
+      const delay = Math.min(idx * 70, 350);
+      el.style.transitionDelay = delay + 'ms';
+      el.classList.add('is-visible');
+      setTimeout(() => { el.style.transitionDelay = ''; }, delay + 700);
+      io.unobserve(el);
     });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
   els.forEach((el) => {
@@ -21,6 +30,87 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
     else io.observe(el);
   });
 })();
+
+/* ---------- Subtil hero-parallakse (kun transform, av ved redusert rørsle) ---------- */
+(function () {
+  const content = document.querySelector('.hero-content');
+  if (!content || reducedMotion || window.innerWidth < 700) return;
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const y = Math.min(window.scrollY, 700);
+      content.style.transform = `translateY(${y * 0.16}px)`;
+      content.style.opacity = String(Math.max(0, 1 - y / 640));
+      ticking = false;
+    });
+  }, { passive: true });
+})();
+
+/* ---------- Mjuk innfasing av late bilete ---------- */
+(function () {
+  if (reducedMotion) return;
+  document.querySelectorAll('img[loading="lazy"]').forEach((img) => {
+    if (img.complete) return;
+    img.classList.add('img-fade');
+    img.addEventListener('load', () => img.classList.add('is-loaded'), { once: true });
+    img.addEventListener('error', () => img.classList.add('is-loaded'), { once: true });
+  });
+})();
+
+/* ---------- Produktsøk ---------- */
+(function () {
+  const overlay = document.querySelector('[data-search-overlay]');
+  if (!overlay) return;
+  const input = overlay.querySelector('[data-search-input]');
+  const resultsEl = overlay.querySelector('[data-search-results]');
+  let lastFocus = null;
+  let debounceT = null;
+
+  function open() {
+    lastFocus = document.activeElement;
+    overlay.hidden = false;
+    input.focus();
+  }
+  function close() {
+    overlay.hidden = true;
+    if (lastFocus) lastFocus.focus();
+  }
+  document.querySelectorAll('[data-open-search]').forEach((b) => b.addEventListener('click', open));
+  overlay.querySelector('[data-close-search]').addEventListener('click', close);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !overlay.hidden) close(); });
+
+  async function search(q) {
+    if (q.trim().length < 2) { resultsEl.innerHTML = ''; return; }
+    try {
+      const res = await fetch('/api/sok?q=' + encodeURIComponent(q));
+      const data = await res.json();
+      if (!data.results.length) {
+        resultsEl.innerHTML = '<p class="search-empty">Ingen treff på «' + esc(q) + '» – prøv et annet ord.</p>';
+        return;
+      }
+      resultsEl.innerHTML = data.results.map((r) => `
+        <a class="search-result" href="/produkt/${esc(r.slug)}">
+          <img src="${r.image.startsWith('/media/') ? esc(r.image) : esc(r.image) + '-300.jpg'}" alt="" width="56" height="56" loading="lazy">
+          <span><span class="search-result-name">${esc(r.name)}</span><span class="search-result-meta">${esc(r.category)} · ${esc(r.color)}</span></span>
+          <span class="search-result-price ${r.price < r.ordinary ? 'is-sale' : ''}">${r.price},-</span>
+        </a>`).join('');
+    } catch {
+      resultsEl.innerHTML = '<p class="search-empty">Søket feilet – prøv igjen.</p>';
+    }
+  }
+  input.addEventListener('input', () => {
+    clearTimeout(debounceT);
+    debounceT = setTimeout(() => search(input.value), 180);
+  });
+})();
+
+/* ---------- Sortering: send skjema ved val ---------- */
+document.querySelectorAll('[data-auto-submit]').forEach((sel) => {
+  sel.addEventListener('change', () => sel.form.submit());
+});
 
 /* ---------- Mobilmeny ---------- */
 (function () {
@@ -72,12 +162,19 @@ function cartWrite(items) {
   localStorage.setItem(CART_KEY, JSON.stringify(items));
   cartBadge();
 }
+let prevCartCount = null;
 function cartBadge() {
   const n = cartRead().reduce((s, it) => s + it.qty, 0);
   document.querySelectorAll('[data-cart-count]').forEach((el) => {
     el.textContent = String(n);
     el.hidden = n === 0;
+    if (prevCartCount !== null && n > prevCartCount) {
+      el.classList.remove('bump');
+      void el.offsetWidth; // restart animasjonen
+      el.classList.add('bump');
+    }
   });
+  prevCartCount = n;
 }
 cartBadge();
 

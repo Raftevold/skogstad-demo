@@ -87,4 +87,19 @@
   </div>
 </article>
 
+<% if (related && related.length) { %>
+<section class="section section-tinted" aria-labelledby="relatert-tittel">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 id="relatert-tittel">Flere fra <%= categories[product.category] %></h2>
+    </div>
+    <div class="product-grid">
+      <% related.forEach(function (p) { %>
+        <%- include('partials/product-card', { p, pr: relatedPrices[p.slug] }) %>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
 <%- include('partials/footer') %>
