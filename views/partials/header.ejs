@@ -29,7 +29,7 @@
     </nav>
     <div class="header-actions">
       <div class="member-switch">
-        <button class="member-btn" aria-expanded="false" aria-haspopup="true" id="memberBtn">
+        <button class="member-btn" aria-expanded="false" aria-haspopup="true" id="memberBtn" aria-label="Demo: se siden som medlem – velg medlemsnivå">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
           <span class="member-label"><%= tier ? ('Demo: ' + (club.tiers[tier] ? club.tiers[tier].label : tier)) : 'Se medlemspris' %></span>
         </button>
