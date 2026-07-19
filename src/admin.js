@@ -1,10 +1,13 @@
 'use strict';
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const multer = require('multer');
 const bcrypt = require('bcryptjs');
 const sharp = require('sharp');
 const store = require('./store');
+const { PRESETS, sanitizeTheme } = require('./theme');
 
 const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
 let bootPassword = null;
@@ -316,6 +319,44 @@ module.exports = function adminRouter(app) {
   });
 
   function num(v, d) { const n = parseInt(v, 10); return Number.isFinite(n) ? n : d; }
+
+  // ---------- Tema ----------
+  r.get('/tema', async (req, res) => {
+    const theme = (await store.getContent('theme')) || { preset: 'klassisk', ...PRESETS.klassisk };
+    res.render('admin/theme', { presets: PRESETS, theme, error: req.query.feil === '1' });
+  });
+
+  r.post('/tema', async (req, res) => {
+    const theme = sanitizeTheme(req.body);
+    if (!theme) return res.redirect('/admin/tema?feil=1');
+    await store.setContent('theme', theme);
+    app.invalidateContentCache();
+    res.redirect('/admin/tema?lagret=1');
+  });
+
+  // ---------- Bilde-API (til bildeveljaren i produktskjemaet) ----------
+  r.get('/api/bilder', async (req, res) => {
+    let builtIn = [];
+    try {
+      const dir = path.join(__dirname, '..', 'public', 'images');
+      builtIn = fs.readdirSync(dir)
+        .filter((f) => /^prod-.*-600\.jpg$/.test(f))
+        .map((f) => '/images/' + f.replace(/-600\.jpg$/, ''))
+        .sort();
+    } catch {}
+    const uploaded = (await store.listImages()).map((img) => '/media/' + img.name);
+    res.json({ builtIn, uploaded });
+  });
+
+  r.post('/api/bilder', upload.single('bilde'), async (req, res) => {
+    if (!req.file) return res.status(400).json({ ok: false, error: 'Ingen fil' });
+    const base = (req.body.navn || req.file.originalname || 'bilde')
+      .toLowerCase().replace(/\.[a-z0-9]+$/, '').replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'bilde';
+    const name = `${base}-${Date.now().toString(36)}.webp`;
+    const bytes = await sharp(req.file.buffer).rotate().resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 82 }).toBuffer();
+    await store.saveImage(name, 'image/webp', bytes);
+    res.json({ ok: true, url: '/media/' + name });
+  });
 
   // ---------- Innstillingar ----------
   r.get('/innstillinger', (req, res) => res.render('admin/settings', { s: res.locals.site }));

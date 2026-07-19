@@ -9,6 +9,7 @@
 <link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
 <link rel="preload" href="/fonts/figtree-latin-ext-wght.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/css/styles.css">
+<% if (themeCss) { %><style><%- themeCss %></style><% } %>
 <script type="application/ld+json"><%- JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'SportingGoodsStore',

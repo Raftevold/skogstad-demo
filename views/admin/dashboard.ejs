@@ -1,24 +1,43 @@
 <%- include('partials/top', { pageTitle: 'Oversikt' }) %>
 <h1>Oversikt</h1>
 <p class="admin-intro">Her endrer du alt innhold på siden – uten kode. Endringer er synlige umiddelbart.</p>
+
+<div class="quick-grid">
+  <a class="quick-card" href="/admin/produkter/ny">
+    <span class="quick-icon" aria-hidden="true">＋</span>
+    <strong>Nytt produkt</strong>
+    <span>Navn, pris og bilde – ferdig på under ett minutt</span>
+  </a>
+  <a class="quick-card" href="/admin/kampanjer/ny">
+    <span class="quick-icon" aria-hidden="true">％</span>
+    <strong>Ny kampanje</strong>
+    <span>For alle kunder eller kun medlemmer</span>
+  </a>
+  <a class="quick-card" href="/admin/varsel">
+    <span class="quick-icon" aria-hidden="true">📣</span>
+    <strong>Varsellinje</strong>
+    <span>Status: <%= notice.enabled ? 'PÅ – «' + notice.text + '»' : 'AV' %></span>
+  </a>
+  <a class="quick-card" href="/admin/tema">
+    <span class="quick-icon" aria-hidden="true">🎨</span>
+    <strong>Bytt tema</strong>
+    <span>Farger og uttrykk – med kontrast-vakt</span>
+  </a>
+</div>
+
 <div class="stat-grid">
   <a class="stat-card" href="/admin/produkter"><strong><%= counts.products %></strong><span>Produkter</span></a>
   <a class="stat-card" href="/admin/kampanjer"><strong><%= counts.campaigns %></strong><span>Kampanjer</span></a>
   <a class="stat-card" href="/admin/meldinger"><strong><%= counts.messages %></strong><span>Meldinger</span></a>
   <a class="stat-card" href="/admin/bilder"><strong><%= counts.images %></strong><span>Opplastede bilder</span></a>
 </div>
+
 <section class="admin-card">
-  <h2>Varsellinje</h2>
-  <p>Status: <strong><%= notice.enabled ? 'PÅ' : 'AV' %></strong><%= notice.enabled ? ' – «' + notice.text + '»' : '' %></p>
-  <a class="admin-btn" href="/admin/varsel">Endre varsellinje</a>
-</section>
-<section class="admin-card">
-  <h2>Hurtigstart</h2>
+  <h2>Slik henger det sammen</h2>
   <ul class="admin-list">
-    <li><a href="/admin/innhold">Endre tekster på forsiden, om oss og bærekraft</a></li>
-    <li><a href="/admin/produkter/ny">Legg til nytt produkt</a></li>
-    <li><a href="/admin/kampanjer/ny">Opprett kampanje (alle kunder eller kun medlemmer)</a></li>
-    <li><a href="/admin/bilder">Last opp bilder</a></li>
+    <li><strong>Produkter</strong> har én ordinær pris. <strong>Kampanjer</strong> legger rabatter oppå – prismotoren sørger for at «beste pris vinner», aldri dobbel rabatt.</li>
+    <li>Kampanjer merket «kun medlemmer» vises automatisk for innloggede medlemmer – test selv med medlemsbryteren øverst på nettsiden.</li>
+    <li><strong>Bilder</strong> du laster opp komprimeres automatisk og lagres trygt i databasen – de overlever omstart og oppdateringer.</li>
   </ul>
 </section>
 <%- include('partials/bottom') %>

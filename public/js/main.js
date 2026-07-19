@@ -141,7 +141,7 @@ function toast(msg) {
     }
     linesEl.innerHTML = data.lines.map((l, i) => `
       <div class="cart-line">
-        <img src="${l.image}-300.jpg" alt="" width="92" height="92" loading="lazy">
+        <img src="${l.image.startsWith('/media/') ? l.image : l.image + '-300.jpg'}" alt="" width="92" height="92" loading="lazy">
         <div>
           <p class="cart-line-name">${esc(l.name)}</p>
           <p class="cart-line-meta">${esc(l.color)}${l.size ? ' · Str. ' + esc(l.size) : ''} · ${l.qty} stk</p>

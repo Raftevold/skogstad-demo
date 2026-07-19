@@ -1,42 +1,111 @@
 <%- include('partials/top', { pageTitle: p ? 'Rediger produkt' : 'Nytt produkt' }) %>
-<h1><%= p ? 'Rediger: ' + p.name : 'Nytt produkt' %></h1>
-<section class="admin-card">
-  <form method="post" action="/admin/produkter/lagre">
-    <% if (p) { %><input type="hidden" name="id" value="<%= p.id %>"><% } %>
-    <div class="field-row">
-      <div class="field wide"><label for="p-name">Navn</label><input id="p-name" name="name" required value="<%= p ? p.name : '' %>"></div>
-      <div class="field"><label for="p-slug">Slug (URL)</label><input id="p-slug" name="slug" value="<%= p ? p.slug : '' %>" placeholder="genereres om tom"></div>
+<div class="page-actions">
+  <h1><%= p ? 'Rediger: ' + p.name : 'Nytt produkt' %></h1>
+  <% if (p) { %><a class="admin-btn" href="/produkt/<%= p.slug %>" target="_blank" rel="noopener">Vis på siden ↗</a><% } %>
+</div>
+
+<form method="post" action="/admin/produkter/lagre" class="product-form">
+  <% if (p) { %><input type="hidden" name="id" value="<%= p.id %>"><% } %>
+  <div class="product-form-grid">
+    <div>
+      <section class="admin-card">
+        <h2>Det viktigste</h2>
+        <div class="field">
+          <label for="p-name">Produktnavn</label>
+          <input id="p-name" name="name" required data-slug-source value="<%= p ? p.name : '' %>" placeholder="f.eks. W Fjellbris, turjakke">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="p-cat">Kategori</label>
+            <select id="p-cat" name="category">
+              <% [['barn','Barn 1–8 år'],['junior','Junior 10–16 år'],['dame','Dame'],['herre','Herre']].forEach(function (c) { %>
+                <option value="<%= c[0] %>" <%= p && p.category === c[0] ? 'selected' : '' %>><%= c[1] %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="field">
+            <label for="p-price">Ordinær pris (kr)</label>
+            <input id="p-price" name="price" type="number" min="0" required value="<%= p ? p.price : '' %>" placeholder="999">
+            <p class="field-hint">Salgs- og medlemspriser styres av <a href="/admin/kampanjer">kampanjer</a> – aldri her.</p>
+          </div>
+          <div class="field"><label for="p-color">Farge</label><input id="p-color" name="color" value="<%= p ? p.color : '' %>" placeholder="f.eks. Cedar Wood"></div>
+        </div>
+        <div class="field">
+          <label for="p-sub">Kort undertittel</label>
+          <input id="p-sub" name="subtitle" value="<%= p ? p.subtitle : '' %>" placeholder="f.eks. 2-lags teknisk skalljakke">
+        </div>
+      </section>
+
+      <section class="admin-card">
+        <h2>Størrelser</h2>
+        <div class="size-quick" role="group" aria-label="Hurtigvalg for størrelser">
+          <button type="button" class="admin-btn" data-sizes="86, 92, 98, 104, 110, 116, 122, 128">Barn 86–128</button>
+          <button type="button" class="admin-btn" data-sizes="10, 12, 14, 16">Junior 10–16</button>
+          <button type="button" class="admin-btn" data-sizes="XS, S, M, L, XL">Dame XS–XL</button>
+          <button type="button" class="admin-btn" data-sizes="S, M, L, XL, XXL, XXXL">Herre S–XXXL</button>
+        </div>
+        <div class="field">
+          <label for="p-sizes">Størrelser (kommaseparert)</label>
+          <input id="p-sizes" name="sizes" value="<%= p ? (p.sizes || []).join(', ') : '' %>" placeholder="Bruk hurtigvalgene over, eller skriv selv">
+        </div>
+      </section>
+
+      <section class="admin-card">
+        <h2>Beskrivelse</h2>
+        <div class="field"><label for="p-desc">Beskrivelse</label><textarea id="p-desc" name="description" rows="4" placeholder="Kort, selgende beskrivelse av produktet."><%= p ? p.description : '' %></textarea></div>
+        <div class="field"><label for="p-specs">Produktdetaljer (én per linje)</label><textarea id="p-specs" name="specs" rows="5" placeholder="Vanntetthet: WP 20 000 mm&#10;Tapede sømmer"><%= p ? (p.specs || []).join('\n') : '' %></textarea></div>
+      </section>
+
+      <details class="admin-card admin-details">
+        <summary>Avansert (URL og sortering)</summary>
+        <div class="field-row">
+          <div class="field"><label for="p-slug">Slug (URL)</label><input id="p-slug" name="slug" data-slug-field value="<%= p ? p.slug : '' %>" placeholder="lages automatisk av navnet"></div>
+          <div class="field slim"><label for="p-sort">Sortering</label><input id="p-sort" name="sort" type="number" value="<%= p ? p.sort : 0 %>"></div>
+        </div>
+      </details>
     </div>
-    <div class="field-row">
-      <div class="field wide"><label for="p-sub">Undertittel</label><input id="p-sub" name="subtitle" value="<%= p ? p.subtitle : '' %>"></div>
-      <div class="field"><label for="p-color">Farge</label><input id="p-color" name="color" value="<%= p ? p.color : '' %>"></div>
-    </div>
-    <div class="field-row">
-      <div class="field"><label for="p-cat">Kategori</label>
-        <select id="p-cat" name="category">
-          <% ['barn','junior','dame','herre'].forEach(function (c) { %>
-            <option value="<%= c %>" <%= p && p.category === c ? 'selected' : '' %>><%= c %></option>
-          <% }) %>
-        </select>
+
+    <div>
+      <section class="admin-card">
+        <h2>Produktbilde</h2>
+        <div class="img-preview" data-img-preview>
+          <% const cur = p && p.image ? p.image : ''; %>
+          <img src="<%= cur ? (cur.startsWith('/media/') ? cur : cur + '-600.jpg') : '' %>" alt="" <%= cur ? '' : 'hidden' %>>
+          <p class="img-preview-empty" <%= cur ? 'hidden' : '' %>>Ingen bilde valgt</p>
+        </div>
+        <input type="hidden" name="image" value="<%= cur %>" data-img-field>
+        <div class="img-actions">
+          <button type="button" class="admin-btn" data-open-picker>Velg fra bildebibliotek</button>
+          <label class="admin-btn img-upload-btn">Last opp nytt
+            <input type="file" accept="image/*" data-img-upload hidden>
+          </label>
+        </div>
+        <p class="field-hint" data-upload-status></p>
+      </section>
+
+      <section class="admin-card">
+        <h2>Synlighet</h2>
+        <label class="switch-row"><input type="checkbox" name="active" <%= !p || p.active ? 'checked' : '' %>> <span><strong>Aktiv</strong><br>Vises i butikken</span></label>
+        <label class="switch-row"><input type="checkbox" name="featured" <%= p && p.featured ? 'checked' : '' %>> <span><strong>Fremhevet</strong><br>Vises i «favoritter» på forsiden</span></label>
+        <label class="switch-row"><input type="checkbox" name="placeholder" <%= p && p.placeholder ? 'checked' : '' %>> <span><strong>Placeholder</strong><br>Merker produktet som uverifisert innhold</span></label>
+      </section>
+
+      <div class="form-sticky">
+        <button class="admin-btn admin-btn-primary admin-btn-big" type="submit"><%= p ? 'Lagre endringer' : 'Opprett produkt' %></button>
+        <a class="admin-btn" href="/admin/produkter">Avbryt</a>
       </div>
-      <div class="field"><label for="p-price">Ordinær pris (kr)</label><input id="p-price" name="price" type="number" min="0" required value="<%= p ? p.price : '' %>"></div>
-      <div class="field"><label for="p-sort">Sortering</label><input id="p-sort" name="sort" type="number" value="<%= p ? p.sort : 0 %>"></div>
     </div>
-    <div class="field">
-      <label for="p-img">Bilde</label>
-      <input id="p-img" name="image" value="<%= p ? p.image : '' %>" placeholder="/images/prod-… eller /media/…">
-      <p class="field-hint">Bruk et navn fra <a href="/admin/bilder">Bilder</a> (f.eks. /media/mitt-bilde.webp) eller en innebygget bildesti (/images/prod-roros).</p>
+  </div>
+</form>
+
+<div class="picker-modal" data-picker-modal hidden>
+  <div class="picker-box" role="dialog" aria-modal="true" aria-labelledby="picker-title">
+    <div class="picker-head">
+      <h2 id="picker-title">Velg bilde</h2>
+      <button type="button" class="admin-btn" data-close-picker>Lukk</button>
     </div>
-    <div class="field"><label for="p-sizes">Størrelser (kommaseparert)</label><input id="p-sizes" name="sizes" value="<%= p ? (p.sizes || []).join(', ') : '' %>"></div>
-    <div class="field"><label for="p-desc">Beskrivelse</label><textarea id="p-desc" name="description" rows="4"><%= p ? p.description : '' %></textarea></div>
-    <div class="field"><label for="p-specs">Produktdetaljer (én per linje)</label><textarea id="p-specs" name="specs" rows="5"><%= p ? (p.specs || []).join('\n') : '' %></textarea></div>
-    <div class="check-row">
-      <label><input type="checkbox" name="active" <%= !p || p.active ? 'checked' : '' %>> Aktiv (synlig i butikken)</label>
-      <label><input type="checkbox" name="featured" <%= p && p.featured ? 'checked' : '' %>> Fremhevet på forsiden</label>
-      <label><input type="checkbox" name="placeholder" <%= p && p.placeholder ? 'checked' : '' %>> Placeholder (uverifisert innhold)</label>
-    </div>
-    <button class="admin-btn admin-btn-primary" type="submit">Lagre produkt</button>
-    <a class="admin-btn" href="/admin/produkter">Avbryt</a>
-  </form>
-</section>
+    <p class="field-hint">Klikk på et bilde for å bruke det. Egne opplastinger vises først.</p>
+    <div class="picker-grid" data-picker-grid><p>Laster bilder …</p></div>
+  </div>
+</div>
 <%- include('partials/bottom') %>

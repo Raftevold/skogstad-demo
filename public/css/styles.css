@@ -97,7 +97,7 @@ a:hover { color: var(--green-950); }
 .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-card); }
 .btn:active { transform: translateY(0); }
 .btn-primary { background: var(--accent); color: #fff; }
-.btn-primary:hover { background: #93350e; color: #fff; }
+.btn-primary:hover { background: var(--accent-dark); color: #fff; }
 .btn-secondary { background: transparent; color: var(--green-900); border-color: var(--green-900); }
 .btn-secondary:hover { background: var(--green-900); color: #fff; }
 .btn-ghost { background: rgba(255, 255, 255, 0.14); color: #fff; border-color: rgba(255, 255, 255, 0.7); backdrop-filter: blur(4px); }

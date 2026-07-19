@@ -1,0 +1,96 @@
+<%- include('partials/top', { pageTitle: 'Tema' }) %>
+<h1>Tema og farger</h1>
+<p class="admin-intro">Velg et ferdig tema eller sett deres egne farger. Forhåndsvisningen viser hvordan knapper, priser og seksjoner vil se ut. Kontrast-vakten hindrer kombinasjoner som bryter kravene til universell utforming (WCAG AA).</p>
+<% if (error) { %><p class="admin-error" role="alert">Temaet ble ikke lagret: en eller flere farger har for lav kontrast (hvit tekst må være lesbar på primær-, mørk- og aksentfargen, og bakgrunnen må være lys).</p><% } %>
+
+<form method="post" action="/admin/tema" data-theme-form>
+  <section class="admin-card">
+    <h2>Ferdige tema</h2>
+    <div class="tema-presets">
+      <% Object.entries(presets).forEach(function ([key, p]) { %>
+        <label class="tema-preset <%= theme.preset === key ? 'is-active' : '' %>">
+          <input type="radio" name="preset" value="<%= key %>" <%= theme.preset === key ? 'checked' : '' %>
+            data-primary="<%= p.primary %>" data-primarydark="<%= p.primaryDark %>" data-accent="<%= p.accent %>" data-bg="<%= p.bg %>" data-radius="<%= p.radius %>">
+          <span class="tema-swatches" aria-hidden="true">
+            <span style="background:<%= p.primary %>"></span><span style="background:<%= p.primaryDark %>"></span><span style="background:<%= p.accent %>"></span><span style="background:<%= p.bg %>; border:1px solid #ddd"></span>
+          </span>
+          <strong><%= p.label %></strong>
+        </label>
+      <% }) %>
+      <label class="tema-preset <%= theme.preset === 'custom' ? 'is-active' : '' %>">
+        <input type="radio" name="preset" value="custom" <%= theme.preset === 'custom' ? 'checked' : '' %>>
+        <span class="tema-swatches" aria-hidden="true"><span class="tema-swatch-custom">🎨</span></span>
+        <strong>Egne farger</strong>
+      </label>
+    </div>
+  </section>
+
+  <section class="admin-card" data-custom-panel <%= theme.preset === 'custom' ? '' : 'hidden' %>>
+    <h2>Egne farger</h2>
+    <input type="hidden" name="mode" value="<%= theme.preset === 'custom' ? 'custom' : '' %>" data-mode-field>
+    <div class="field-row">
+      <div class="field">
+        <label for="t-primary">Primærfarge (knapper, meny)</label>
+        <input id="t-primary" type="color" name="primary" value="<%= theme.primary %>">
+        <p class="field-hint" data-contrast="primary"></p>
+      </div>
+      <div class="field">
+        <label for="t-dark">Mørk flate (bunnfelt, klubb-seksjon)</label>
+        <input id="t-dark" type="color" name="primaryDark" value="<%= theme.primaryDark %>">
+        <p class="field-hint" data-contrast="primaryDark"></p>
+      </div>
+      <div class="field">
+        <label for="t-accent">Aksent (kjøpsknapper, salg)</label>
+        <input id="t-accent" type="color" name="accent" value="<%= theme.accent %>">
+        <p class="field-hint" data-contrast="accent"></p>
+      </div>
+      <div class="field">
+        <label for="t-bg">Bakgrunn (lys)</label>
+        <input id="t-bg" type="color" name="bg" value="<%= theme.bg %>">
+        <p class="field-hint" data-contrast="bg"></p>
+      </div>
+      <div class="field slim">
+        <label for="t-radius">Hjørner</label>
+        <select id="t-radius" name="radius">
+          <option value="2" <%= theme.radius <= 4 ? 'selected' : '' %>>Skarpe</option>
+          <option value="8" <%= theme.radius > 4 && theme.radius <= 11 ? 'selected' : '' %>>Middels</option>
+          <option value="14" <%= theme.radius > 11 && theme.radius <= 16 ? 'selected' : '' %>>Myke</option>
+          <option value="20" <%= theme.radius > 16 ? 'selected' : '' %>>Ekstra myke</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <section class="admin-card">
+    <h2>Forhåndsvisning</h2>
+    <div class="tema-preview" data-theme-preview>
+      <div class="tp-hero">
+        <p class="tp-kicker">Innvik i Nordfjord · siden 1937</p>
+        <h3>Skapt for tur. Siden 1937.</h3>
+        <div class="tp-btns">
+          <span class="tp-btn tp-btn-accent">Se sommerens favoritter</span>
+          <span class="tp-btn tp-btn-ghost">Bli medlem – få 15 %</span>
+        </div>
+      </div>
+      <div class="tp-body">
+        <div class="tp-card">
+          <span class="tp-badge">−30 %</span>
+          <div class="tp-img"></div>
+          <p class="tp-name">W Gon, pilefleece</p>
+          <p class="tp-price"><strong class="tp-sale">979,-</strong> <s>1399,-</s></p>
+        </div>
+        <div class="tp-side">
+          <span class="tp-chip">Dame</span>
+          <span class="tp-chip tp-chip-active">Herre</span>
+          <p class="tp-text">Slik ser lenker og <a>tekstlenker</a> ut på lys bakgrunn.</p>
+          <span class="tp-btn tp-btn-primary">Legg i handlekurv</span>
+        </div>
+      </div>
+      <div class="tp-footer">Skogstad Sport AS · Org.nr 932 980 177 MVA</div>
+    </div>
+    <p class="field-hint">Forhåndsvisningen oppdateres når du velger tema eller endrer farger. Endringen gjelder hele nettsiden med én gang du lagrer.</p>
+  </section>
+
+  <button class="admin-btn admin-btn-primary" type="submit">Lagre tema</button>
+</form>
+<%- include('partials/bottom') %>

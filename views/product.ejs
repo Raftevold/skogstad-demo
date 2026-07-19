@@ -8,9 +8,11 @@
         <span class="badge <%= price.memberOnly ? 'badge-member' : 'badge-sale' %>"><%= price.memberOnly ? 'Medlemspris' : ('−' + price.discountPercent + ' %') %></span>
       <% } %>
       <picture>
-        <source srcset="<%= product.image %>-900.avif" type="image/avif">
-        <source srcset="<%= product.image %>-900.webp" type="image/webp">
-        <img src="<%= product.image %>-900.jpg" alt="<%= product.name %> i fargen <%= product.color %>" width="900" height="900" fetchpriority="high">
+        <% if (imgHasVariants(product.image)) { %>
+          <source srcset="<%= imgSrc(product.image, 900, 'avif') %>" type="image/avif">
+          <source srcset="<%= imgSrc(product.image, 900, 'webp') %>" type="image/webp">
+        <% } %>
+        <img src="<%= imgSrc(product.image, 900, 'jpg') %>" alt="<%= product.name %> i fargen <%= product.color %>" width="900" height="900" fetchpriority="high">
       </picture>
     </div>
 

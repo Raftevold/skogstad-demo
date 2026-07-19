@@ -9,9 +9,11 @@
       </span>
     <% } %>
     <picture>
-      <source srcset="<%= p.image %>-600.avif" type="image/avif">
-      <source srcset="<%= p.image %>-600.webp" type="image/webp">
-      <img src="<%= p.image %>-600.jpg" alt="<%= p.name %> i fargen <%= p.color %>" width="600" height="600" loading="lazy">
+      <% if (imgHasVariants(p.image)) { %>
+        <source srcset="<%= imgSrc(p.image, 600, 'avif') %>" type="image/avif">
+        <source srcset="<%= imgSrc(p.image, 600, 'webp') %>" type="image/webp">
+      <% } %>
+      <img src="<%= imgSrc(p.image, 600, 'jpg') %>" alt="<%= p.name %> i fargen <%= p.color %>" width="600" height="600" loading="lazy">
     </picture>
   </div>
   <div class="product-card-body">

@@ -5,6 +5,7 @@ const compression = require('compression');
 const store = require('./store');
 const { seedIfEmpty } = require('./seed');
 const { resolvePrice, priceMap } = require('./price');
+const { themeCss } = require('./theme');
 const adminRouter = require('./admin');
 
 const app = express();
@@ -80,6 +81,10 @@ app.use(async (req, res, next) => {
     res.locals.demoMode = DEMO_MODE;
     res.locals.tier = VALID_TIERS.includes(req.cookies.demo_tier) ? req.cookies.demo_tier : null;
     res.locals.cookieNoticeSeen = req.cookies.cookie_ok === '1';
+    res.locals.themeCss = themeCss(c.theme);
+    // Produktbilete: innebygde stiar har genererte storleiksvariantar, opplasta (/media/) har éi fil
+    res.locals.imgSrc = (base, size, ext) => (String(base).startsWith('/media/') ? base : `${base}-${size}.${ext}`);
+    res.locals.imgHasVariants = (base) => !String(base).startsWith('/media/');
     next();
   } catch (e) { next(e); }
 });
