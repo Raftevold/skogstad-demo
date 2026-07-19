@@ -1,0 +1,63 @@
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-col footer-brand">
+      <img src="/images/logo-skogstad-hvit.svg" alt="Skogstad" width="150" height="28" loading="lazy">
+      <p class="footer-tagline"><%= site.tagline %></p>
+      <p>Norsk familiebedrift fra Innvik i Nordfjord – siden 1937.</p>
+      <ul class="social-links" aria-label="Sosiale medier">
+        <% if (site.social.facebook) { %><li><a href="<%= site.social.facebook %>" rel="noopener" target="_blank" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5h1.3V4.9c-.2 0-1-.1-1.9-.1-1.9 0-3.3 1.2-3.3 3.4V11H8.8v3h2.4v7h2.3z"/></svg></a></li><% } %>
+        <% if (site.social.instagram) { %><li><a href="<%= site.social.instagram %>" rel="noopener" target="_blank" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a></li><% } %>
+        <% if (site.social.youtube) { %><li><a href="<%= site.social.youtube %>" rel="noopener" target="_blank" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12s0-3.3-.4-4.8c-.2-.8-.9-1.5-1.7-1.7C18.4 5 12 5 12 5s-6.4 0-7.9.5c-.8.2-1.5.9-1.7 1.7C2 8.7 2 12 2 12s0 3.3.4 4.8c.2.8.9 1.5 1.7 1.7 1.5.5 7.9.5 7.9.5s6.4 0 7.9-.5c-.8-.2 1.5-.9 1.7-1.7.4-1.5.4-4.8.4-4.8zM10 15V9l5.2 3L10 15z"/></svg></a></li><% } %>
+        <% if (site.social.tiktok) { %><li><a href="<%= site.social.tiktok %>" rel="noopener" target="_blank" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 3c.4 2 1.8 3.5 3.9 3.7v2.9c-1.5 0-2.8-.5-3.9-1.3v6.1c0 3.4-2.5 5.6-5.6 5.6-3 0-5.5-2.3-5.5-5.4 0-3.5 3.2-5.9 6.6-5.3v3c-.4-.1-.8-.2-1.2-.2-1.4 0-2.5 1.1-2.5 2.5s1.1 2.5 2.5 2.5c1.5 0 2.6-1 2.6-2.8V3h3.1z"/></svg></a></li><% } %>
+        <% if (site.social.linkedin) { %><li><a href="<%= site.social.linkedin %>" rel="noopener" target="_blank" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.5 8.5v12H3v-12h3.5zM4.8 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM21 13.4v7.1h-3.5v-6.6c0-1.6-.6-2.6-2-2.6-1.1 0-1.7.7-2 1.4-.1.3-.1.7-.1 1v6.8H9.9v-12h3.5v1.7c.5-.8 1.4-1.9 3.3-1.9 2.4 0 4.3 1.6 4.3 5.1z"/></svg></a></li><% } %>
+      </ul>
+    </div>
+    <nav class="footer-col" aria-label="Butikk">
+      <h2 class="footer-heading">Butikk</h2>
+      <ul>
+        <li><a href="/produkter/barn">Barn 1–8 år</a></li>
+        <li><a href="/produkter/junior">Junior 10–16 år</a></li>
+        <li><a href="/produkter/dame">Dame</a></li>
+        <li><a href="/produkter/herre">Herre</a></li>
+        <li><a href="/kundeklubb">Kundeklubb</a></li>
+      </ul>
+    </nav>
+    <nav class="footer-col" aria-label="Om Skogstad">
+      <h2 class="footer-heading">Om Skogstad</h2>
+      <ul>
+        <li><a href="/om-oss">Vår historie</a></li>
+        <li><a href="/baerekraft">Bærekraft</a></li>
+        <li><a href="/butikker">Finn butikk</a></li>
+        <li><a href="/for-skogstad">Om denne demoen</a></li>
+      </ul>
+    </nav>
+    <nav class="footer-col" aria-label="Kundeservice">
+      <h2 class="footer-heading">Kundeservice</h2>
+      <ul>
+        <li><a href="/kundeservice">Kontakt oss</a></li>
+        <li><a href="/kjopsvilkar">Kjøpsvilkår</a></li>
+        <li><a href="/personvern">Personvern</a></li>
+        <li><a href="/informasjonskapsler">Informasjonskapsler</a></li>
+      </ul>
+      <p class="footer-contact">
+        <a href="tel:<%= site.phone.replace(/\s/g,'') %>"><%= site.phone %></a><br>
+        <a href="mailto:<%= site.email %>"><%= site.email %></a>
+      </p>
+    </nav>
+  </div>
+  <div class="wrap footer-bottom">
+    <p>Skogstad Sport AS · Org.nr <%= site.orgnr %> · <%= site.address %> · Miljøfyrtårn-sertifisert</p>
+    <p class="footer-demo-note">Demo-nettside laget som konseptforslag – ikke Skogstads offisielle side. Bilder tilhører Skogstad Sport AS.</p>
+  </div>
+</footer>
+<% if (!cookieNoticeSeen) { %>
+<div class="cookie-note" role="region" aria-label="Informasjonskapsler">
+  <p>Denne siden bruker kun nødvendige informasjonskapsler – ingen sporing eller markedsføring. <a href="/informasjonskapsler">Les mer</a></p>
+  <a class="btn btn-small" href="/cookie-ok">Ok</a>
+</div>
+<% } %>
+<div class="toast" data-toast role="status" aria-live="polite" hidden></div>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

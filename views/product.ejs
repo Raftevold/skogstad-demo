@@ -1,0 +1,88 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<article class="section product-page">
+  <div class="wrap product-layout">
+    <div class="product-media reveal">
+      <% if (price.discountPercent > 0) { %>
+        <span class="badge <%= price.memberOnly ? 'badge-member' : 'badge-sale' %>"><%= price.memberOnly ? 'Medlemspris' : ('−' + price.discountPercent + ' %') %></span>
+      <% } %>
+      <picture>
+        <source srcset="<%= product.image %>-900.avif" type="image/avif">
+        <source srcset="<%= product.image %>-900.webp" type="image/webp">
+        <img src="<%= product.image %>-900.jpg" alt="<%= product.name %> i fargen <%= product.color %>" width="900" height="900" fetchpriority="high">
+      </picture>
+    </div>
+
+    <div class="product-info">
+      <nav class="crumbs" aria-label="Brødsmulesti">
+        <a href="/produkter">Produkter</a> / <a href="/produkter/<%= product.category %>"><%= categories[product.category] %></a>
+      </nav>
+      <h1><%= product.name %></h1>
+      <p class="product-sub"><%= product.subtitle %> · <%= product.color %></p>
+      <% if (product.placeholder) { %>
+        <p class="placeholder-note">Merk: pris og detaljer for dette produktet er placeholder – ikke hentet fra kildene.</p>
+      <% } %>
+
+      <div class="price-box">
+        <p class="product-price">
+          <span class="price-now <%= price.discountPercent > 0 ? 'is-sale' : '' %>" data-price-now><%= price.final %>,-</span>
+          <% if (price.discountPercent > 0) { %><s class="price-before"><%= price.ordinary %>,-</s><% } %>
+        </p>
+        <% if (price.campaignName) { %><p class="price-campaign"><%= price.campaignName.replace(' [DEMO-EKSEMPEL]', '') %><%= price.memberOnly ? ' (kun medlemmer)' : '' %></p><% } %>
+        <% if (tier) { %>
+          <p class="price-points">Du tjener <strong><%= price.points %> bonuspoeng</strong> på dette kjøpet (<%= club.tiers[tier].label %>: <%= price.bonusPercent %> % bonus).</p>
+        <% } else { %>
+          <% const best = Math.min(tierPrices.medlem.final, tierPrices.solv.final, tierPrices.gull.final); %>
+          <% if (best < anonPrice.final) { %>
+            <p class="price-member-hint">Medlemmer betaler <strong><%= best %>,-</strong> for denne varen. <a href="/kundeklubb">Bli medlem</a> eller <button class="linklike" data-open-member>prøv demo-modus</button>.</p>
+          <% } else { %>
+            <p class="price-member-hint">Medlemmer tjener bonuspoeng på alle kjøp. <a href="/kundeklubb">Bli medlem</a></p>
+          <% } %>
+        <% } %>
+        <details class="price-trace">
+          <summary>Hvordan er prisen beregnet?</summary>
+          <ol>
+            <% price.trace.forEach(function (t) { %>
+              <li class="<%= t.applied ? 'is-applied' : '' %>"><%= t.rule %>: <%= t.price %>,- <%= t.applied ? '← gjeldende pris' : '' %></li>
+            <% }) %>
+          </ol>
+          <p class="price-trace-note">Prisen beregnes av én sentral prismotor – samme svar i nettbutikk, kasse og butikk. «Beste pris vinner», ingen utilsiktet rabatt-stabling.</p>
+        </details>
+      </div>
+
+      <form class="buy-form" data-add-to-cart data-slug="<%= product.slug %>" data-name="<%= product.name %>">
+        <fieldset class="size-picker">
+          <legend>Velg størrelse</legend>
+          <div class="size-options">
+            <% (product.sizes || []).forEach(function (s, i) { %>
+              <label class="size-option"><input type="radio" name="size" value="<%= s %>" <%= i === 0 ? 'checked' : '' %>><span><%= s %></span></label>
+            <% }) %>
+          </div>
+        </fieldset>
+        <div class="buy-row">
+          <label class="qty-label">Antall
+            <input class="qty-input" type="number" name="qty" value="1" min="1" max="20" inputmode="numeric">
+          </label>
+          <button class="btn btn-primary btn-large" type="submit">Legg i handlekurv</button>
+        </div>
+      </form>
+
+      <div class="product-desc">
+        <p><%= product.description %></p>
+        <% if ((product.specs || []).length) { %>
+          <details open>
+            <summary>Produktdetaljer</summary>
+            <ul><% product.specs.forEach(function (s) { %><li><%= s %></li><% }) %></ul>
+          </details>
+        <% } %>
+        <details>
+          <summary>Frakt og retur</summary>
+          <p>Levering 3–5 virkedager. 14 dagers angrerett. Fri frakt for Sølv- og Gull-medlemmer. Se <a href="/kjopsvilkar">kjøpsvilkår</a>.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+</article>
+
+<%- include('partials/footer') %>

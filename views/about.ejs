@@ -1,0 +1,39 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="section-kicker">Om Skogstad</p>
+    <h1>Vår historie</h1>
+    <p class="page-lead"><%= about.intro %></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap narrow">
+    <ol class="timeline">
+      <% (about.timeline || []).forEach(function (t) { %>
+        <li class="timeline-item reveal">
+          <span class="timeline-year"><%= t.year %></span>
+          <p><%= t.text %></p>
+        </li>
+      <% }) %>
+    </ol>
+  </div>
+</section>
+
+<section class="section section-tinted">
+  <div class="wrap split">
+    <div class="split-media reveal">
+      <picture><source srcset="/images/tile-16-800.avif" type="image/avif"><source srcset="/images/tile-16-800.webp" type="image/webp"><img src="/images/tile-16-800.jpg" alt="Skogstad turklær i bruk" width="800" height="1000" loading="lazy"></picture>
+    </div>
+    <div class="split-text reveal">
+      <h2>Tailored by nature</h2>
+      <p>Skogstad ble til fordi naboene frøs når de hogg ved om vinteren og ble våte på sagbruket om høsten. Vi var det første norske selskapet som produserte vind- og vanntette plagg – og det preger fortsatt alt vi lager.</p>
+      <p>I dag har vi 157 ansatte, 17 egne butikker og kunder over hele landet. Men adressen er den samme: Innvik i Nordfjord.</p>
+      <a class="btn btn-secondary" href="/baerekraft">Les om bærekraftsarbeidet vårt</a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

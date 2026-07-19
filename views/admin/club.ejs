@@ -1,0 +1,36 @@
+<%- include('partials/top', { pageTitle: 'Kundeklubb' }) %>
+<h1>Kundeklubb</h1>
+<p class="admin-intro">Disse verdiene styrer både klubbsidene og prismotoren (bonuspoeng og fri frakt).</p>
+<section class="admin-card">
+  <form method="post" action="/admin/klubb">
+    <div class="field slim"><label for="kl-w">Velkomstrabatt (%)</label><input id="kl-w" name="welcomePercent" type="number" min="0" max="50" value="<%= clubConf.welcomePercent %>"></div>
+    <h2>Nivåer</h2>
+    <div class="table-scroll">
+    <table class="admin-table">
+      <thead><tr><th scope="col">Nivå</th><th scope="col">Bonus (%)</th><th scope="col">Sjekk per 1000 p (kr)</th><th scope="col">Fri frakt</th></tr></thead>
+      <tbody>
+        <tr>
+          <th scope="row">Medlem</th>
+          <td><input name="medlemBonus" type="number" min="0" max="50" value="<%= clubConf.tiers.medlem.bonusPercent %>" aria-label="Medlem bonusprosent"></td>
+          <td><input name="medlemCheck" type="number" min="0" value="<%= clubConf.tiers.medlem.checkPer1000 %>" aria-label="Medlem sjekk per 1000 poeng"></td>
+          <td><input name="medlemShip" type="checkbox" <%= clubConf.tiers.medlem.freeShipping ? 'checked' : '' %> aria-label="Medlem fri frakt"></td>
+        </tr>
+        <tr>
+          <th scope="row">Sølv</th>
+          <td><input name="solvBonus" type="number" min="0" max="50" value="<%= clubConf.tiers.solv.bonusPercent %>" aria-label="Sølv bonusprosent"></td>
+          <td><input name="solvCheck" type="number" min="0" value="<%= clubConf.tiers.solv.checkPer1000 %>" aria-label="Sølv sjekk per 1000 poeng"></td>
+          <td><input name="solvShip" type="checkbox" <%= clubConf.tiers.solv.freeShipping ? 'checked' : '' %> aria-label="Sølv fri frakt"></td>
+        </tr>
+        <tr>
+          <th scope="row">Gull</th>
+          <td><input name="gullBonus" type="number" min="0" max="50" value="<%= clubConf.tiers.gull.bonusPercent %>" aria-label="Gull bonusprosent"></td>
+          <td><input name="gullCheck" type="number" min="0" value="<%= clubConf.tiers.gull.checkPer1000 %>" aria-label="Gull sjekk per 1000 poeng"></td>
+          <td><input name="gullShip" type="checkbox" <%= clubConf.tiers.gull.freeShipping ? 'checked' : '' %> aria-label="Gull fri frakt"></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <button class="admin-btn admin-btn-primary" type="submit">Lagre kundeklubb</button>
+  </form>
+</section>
+<%- include('partials/bottom') %>

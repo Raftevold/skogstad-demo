@@ -1,0 +1,26 @@
+<%- include('partials/top', { pageTitle: 'Innstillinger' }) %>
+<h1>Innstillinger</h1>
+<section class="admin-card">
+  <form method="post" action="/admin/innstillinger">
+    <div class="field-row">
+      <div class="field"><label for="s-name">Navn</label><input id="s-name" name="name" value="<%= s.name %>"></div>
+      <div class="field"><label for="s-tag">Slagord</label><input id="s-tag" name="tagline" value="<%= s.tagline %>"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="s-phone">Telefon</label><input id="s-phone" name="phone" value="<%= s.phone %>"></div>
+      <div class="field"><label for="s-email">E-post</label><input id="s-email" name="email" type="email" value="<%= s.email %>"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="s-org">Org.nr</label><input id="s-org" name="orgnr" value="<%= s.orgnr %>"></div>
+      <div class="field wide"><label for="s-addr">Adresse</label><input id="s-addr" name="address" value="<%= s.address %>"></div>
+    </div>
+    <h2>Sosiale medier</h2>
+    <div class="field"><label for="s-fb">Facebook</label><input id="s-fb" name="facebook" value="<%= s.social.facebook %>"></div>
+    <div class="field"><label for="s-ig">Instagram</label><input id="s-ig" name="instagram" value="<%= s.social.instagram %>"></div>
+    <div class="field"><label for="s-li">LinkedIn</label><input id="s-li" name="linkedin" value="<%= s.social.linkedin %>"></div>
+    <div class="field"><label for="s-yt">YouTube</label><input id="s-yt" name="youtube" value="<%= s.social.youtube %>"></div>
+    <div class="field"><label for="s-tt">TikTok</label><input id="s-tt" name="tiktok" value="<%= s.social.tiktok %>"></div>
+    <button class="admin-btn admin-btn-primary" type="submit">Lagre innstillinger</button>
+  </form>
+</section>
+<%- include('partials/bottom') %>

@@ -1,0 +1,25 @@
+<%- include('partials/top', { pageTitle: 'Produkter' }) %>
+<h1>Produkter</h1>
+<p><a class="admin-btn admin-btn-primary" href="/admin/produkter/ny">+ Nytt produkt</a></p>
+<div class="table-scroll">
+<table class="admin-table">
+  <thead><tr><th scope="col">Navn</th><th scope="col">Kategori</th><th scope="col">Pris</th><th scope="col">Status</th><th scope="col">Handling</th></tr></thead>
+  <tbody>
+    <% products.forEach(function (p) { %>
+      <tr>
+        <td><a href="/admin/produkter/<%= p.id %>"><%= p.name %></a><%= p.placeholder ? ' ⚠ placeholder' : '' %></td>
+        <td><%= p.category %></td>
+        <td><%= p.price %>,-</td>
+        <td><%= p.active ? 'Aktiv' : 'Skjult' %><%= p.featured ? ' · Fremhevet' : '' %></td>
+        <td class="row-actions">
+          <a class="admin-btn" href="/admin/produkter/<%= p.id %>">Rediger</a>
+          <form method="post" action="/admin/produkter/<%= p.id %>/slett" data-confirm="Slette «<%= p.name %>»?">
+            <button class="admin-btn admin-btn-danger" type="submit">Slett</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+</div>
+<%- include('partials/bottom') %>

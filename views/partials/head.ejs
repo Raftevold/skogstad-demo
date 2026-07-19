@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= title %></title>
+<meta name="description" content="<%= description %>">
+<% if (demoMode) { %><meta name="robots" content="noindex, nofollow"><% } %>
+<link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
+<link rel="preload" href="/fonts/figtree-latin-ext-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/styles.css">
+<script type="application/ld+json"><%- JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'SportingGoodsStore',
+  name: site.name,
+  description: 'Norsk produsent av tur- og fritidsklær siden 1937. Hovedkontor i Innvik i Nordfjord.',
+  telephone: site.phone,
+  email: site.email,
+  address: { '@type': 'PostalAddress', streetAddress: 'Gamlevegen 47', postalCode: '6793', addressLocality: 'Innvik', addressCountry: 'NO' },
+  vatID: 'NO' + String(site.orgnr || '').replace(/\D/g, '') + 'MVA',
+  foundingDate: '1937',
+  sameAs: Object.values(site.social || {}).filter(Boolean)
+}) %></script>
+</head>
+<body>
+<a class="skip-link" href="#hovedinnhold">Hopp til hovedinnhold</a>

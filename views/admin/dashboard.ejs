@@ -1,0 +1,24 @@
+<%- include('partials/top', { pageTitle: 'Oversikt' }) %>
+<h1>Oversikt</h1>
+<p class="admin-intro">Her endrer du alt innhold på siden – uten kode. Endringer er synlige umiddelbart.</p>
+<div class="stat-grid">
+  <a class="stat-card" href="/admin/produkter"><strong><%= counts.products %></strong><span>Produkter</span></a>
+  <a class="stat-card" href="/admin/kampanjer"><strong><%= counts.campaigns %></strong><span>Kampanjer</span></a>
+  <a class="stat-card" href="/admin/meldinger"><strong><%= counts.messages %></strong><span>Meldinger</span></a>
+  <a class="stat-card" href="/admin/bilder"><strong><%= counts.images %></strong><span>Opplastede bilder</span></a>
+</div>
+<section class="admin-card">
+  <h2>Varsellinje</h2>
+  <p>Status: <strong><%= notice.enabled ? 'PÅ' : 'AV' %></strong><%= notice.enabled ? ' – «' + notice.text + '»' : '' %></p>
+  <a class="admin-btn" href="/admin/varsel">Endre varsellinje</a>
+</section>
+<section class="admin-card">
+  <h2>Hurtigstart</h2>
+  <ul class="admin-list">
+    <li><a href="/admin/innhold">Endre tekster på forsiden, om oss og bærekraft</a></li>
+    <li><a href="/admin/produkter/ny">Legg til nytt produkt</a></li>
+    <li><a href="/admin/kampanjer/ny">Opprett kampanje (alle kunder eller kun medlemmer)</a></li>
+    <li><a href="/admin/bilder">Last opp bilder</a></li>
+  </ul>
+</section>
+<%- include('partials/bottom') %>

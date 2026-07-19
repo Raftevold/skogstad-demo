@@ -1,0 +1,24 @@
+{
+  "name": "skogstad-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo-nettside for Skogstad Sport AS — konsept bygd for pitch. Ikkje offisiell side.",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "optimize-images": "node scripts/optimize-images.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.12.0",
+    "sharp": "^0.33.4"
+  }
+}

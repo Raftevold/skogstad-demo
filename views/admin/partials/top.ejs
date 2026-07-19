@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title><%= typeof pageTitle !== 'undefined' ? pageTitle : 'Admin' %> | Skogstad demo</title>
+<link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+<header class="admin-header">
+  <a class="admin-logo" href="/admin">Skogstad <span>admin</span></a>
+  <nav class="admin-nav" aria-label="Adminmeny">
+    <a href="/admin" <%= path === '/admin' ? 'aria-current="page"' : '' %>>Oversikt</a>
+    <a href="/admin/innhold" <%= path.startsWith('/admin/innhold') ? 'aria-current="page"' : '' %>>Innhold</a>
+    <a href="/admin/produkter" <%= path.startsWith('/admin/produkter') ? 'aria-current="page"' : '' %>>Produkter</a>
+    <a href="/admin/kampanjer" <%= path.startsWith('/admin/kampanjer') ? 'aria-current="page"' : '' %>>Kampanjer</a>
+    <a href="/admin/bilder" <%= path.startsWith('/admin/bilder') ? 'aria-current="page"' : '' %>>Bilder</a>
+    <a href="/admin/meldinger" <%= path.startsWith('/admin/meldinger') ? 'aria-current="page"' : '' %>>Meldinger</a>
+    <a href="/admin/butikker" <%= path.startsWith('/admin/butikker') ? 'aria-current="page"' : '' %>>Butikker</a>
+    <a href="/admin/klubb" <%= path.startsWith('/admin/klubb') ? 'aria-current="page"' : '' %>>Kundeklubb</a>
+    <a href="/admin/varsel" <%= path.startsWith('/admin/varsel') ? 'aria-current="page"' : '' %>>Varsellinje</a>
+    <a href="/admin/seo" <%= path.startsWith('/admin/seo') ? 'aria-current="page"' : '' %>>SEO</a>
+    <a href="/admin/innstillinger" <%= path.startsWith('/admin/innstillinger') ? 'aria-current="page"' : '' %>>Innstillinger</a>
+  </nav>
+  <div class="admin-header-right">
+    <a href="/" target="_blank" rel="noopener">Se siden ↗</a>
+    <a href="/admin/logout">Logg ut</a>
+  </div>
+</header>
+<main class="admin-main">
+<% if (typeof saved !== 'undefined' && saved) { %><p class="admin-flash" role="status">Lagret ✓</p><% } %>

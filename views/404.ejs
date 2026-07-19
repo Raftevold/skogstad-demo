@@ -1,0 +1,17 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="section">
+  <div class="wrap narrow notfound">
+    <% if (typeof is500 !== 'undefined' && is500) { %>
+      <h1>Oi – noe gikk galt</h1>
+      <p>Prøv igjen om et øyeblikk, eller gå tilbake til forsiden.</p>
+    <% } else { %>
+      <h1>Fant ikke siden</h1>
+      <p>Siden du leter etter finnes ikke – kanskje den har gått seg vill på fjellet.</p>
+    <% } %>
+    <a class="btn btn-primary" href="/">Til forsiden</a>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,17 @@
+<%- include('partials/top', { pageTitle: 'SEO' }) %>
+<h1>SEO – tittel og beskrivelse per side</h1>
+<p class="admin-intro">Tittelen vises i Google og i nettleserfanen. Beskrivelsen vises i søkeresultatet. Hold tittelen under ca. 60 tegn og beskrivelsen under ca. 155 tegn.</p>
+<section class="admin-card">
+  <form method="post" action="/admin/seo">
+    <% Object.entries(seoMap).forEach(function ([page, s], i) { %>
+      <fieldset class="seo-block">
+        <legend><%= page %></legend>
+        <input type="hidden" name="page" value="<%= page %>">
+        <div class="field"><label for="seo-t-<%= i %>">Tittel</label><input id="seo-t-<%= i %>" name="title" value="<%= s.title %>" maxlength="70"></div>
+        <div class="field"><label for="seo-d-<%= i %>">Beskrivelse</label><textarea id="seo-d-<%= i %>" name="description" rows="2" maxlength="170"><%= s.description %></textarea></div>
+      </fieldset>
+    <% }) %>
+    <button class="admin-btn admin-btn-primary" type="submit">Lagre SEO</button>
+  </form>
+</section>
+<%- include('partials/bottom') %>

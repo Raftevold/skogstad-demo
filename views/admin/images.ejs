@@ -1,0 +1,32 @@
+<%- include('partials/top', { pageTitle: 'Bilder' }) %>
+<h1>Bilder</h1>
+<section class="admin-card">
+  <h2>Last opp nytt bilde</h2>
+  <form method="post" action="/admin/bilder/last-opp" enctype="multipart/form-data">
+    <div class="field-row">
+      <div class="field"><label for="b-fil">Bildefil (JPG/PNG/WebP, maks 8 MB)</label><input id="b-fil" name="bilde" type="file" accept="image/*" required></div>
+      <div class="field"><label for="b-navn">Navn (valgfritt)</label><input id="b-navn" name="navn" placeholder="f.eks. host-kampanje"></div>
+    </div>
+    <button class="admin-btn admin-btn-primary" type="submit">Last opp</button>
+    <p class="field-hint">Bildet komprimeres automatisk (WebP, maks 1600 px bredde) og lagres i databasen – det overlever omstart og redeploy.</p>
+  </form>
+</section>
+<section class="admin-card">
+  <h2>Opplastede bilder (<%= images.length %>)</h2>
+  <% if (images.length === 0) { %><p>Ingen opplastede bilder ennå.</p><% } %>
+  <div class="image-grid">
+    <% images.forEach(function (img) { %>
+      <figure class="image-item">
+        <img src="/media/<%= img.name %>" alt="" loading="lazy">
+        <figcaption>
+          <code>/media/<%= img.name %></code>
+          <span><%= Math.round(img.size / 1024) %> kB</span>
+          <form method="post" action="/admin/bilder/<%= encodeURIComponent(img.name) %>/slett" data-confirm="Slette bildet?">
+            <button class="admin-btn admin-btn-danger" type="submit">Slett</button>
+          </form>
+        </figcaption>
+      </figure>
+    <% }) %>
+  </div>
+</section>
+<%- include('partials/bottom') %>

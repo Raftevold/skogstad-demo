@@ -1,0 +1,27 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="page-head">
+  <div class="wrap">
+    <h1>Finn butikk</h1>
+    <p class="page-lead">17 Skogstad-butikker over hele Norge. Medlemsfordelene dine gjelder i alle.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="stores-grid">
+      <% stores.forEach(function (s) { %>
+        <div class="store-card reveal">
+          <h2><%= s.name %></h2>
+          <p class="store-place"><%= s.place %></p>
+          <% if (s.note) { %><p class="store-note"><%= s.note %></p><% } %>
+          <p class="store-hours">Åpningstider og adresse: <em>[placeholder – fylles inn av Skogstad]</em></p>
+        </div>
+      <% }) %>
+    </div>
+    <p class="section-more">Adresser og åpningstider per butikk er ikke hentet inn i demoen – de redigeres enkelt i adminpanelet.</p>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

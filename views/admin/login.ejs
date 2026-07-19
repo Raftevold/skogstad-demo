@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Logg inn | Skogstad demo admin</title>
+<link rel="icon" type="image/svg+xml" href="/images/logo-icon.svg">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body admin-login-body">
+<main class="admin-login">
+  <img src="/images/logo-icon.svg" alt="" width="48" height="48">
+  <h1>Adminpanel</h1>
+  <p>Skogstad demo-nettside</p>
+  <% if (error) { %><p class="admin-error" role="alert"><%= error %></p><% } %>
+  <form method="post" action="/admin/login">
+    <label for="passord">Passord</label>
+    <input id="passord" name="passord" type="password" required autocomplete="current-password" autofocus>
+    <button type="submit">Logg inn</button>
+  </form>
+</main>
+</body>
+</html>

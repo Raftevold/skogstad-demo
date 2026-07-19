@@ -1,0 +1,83 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="page-head page-head-club">
+  <div class="wrap">
+    <p class="section-kicker">Til Skogstad Sport</p>
+    <h1>Konseptet bak denne demoen</h1>
+    <p class="page-lead">Denne siden er et uavhengig konseptforslag: en komplett, kjørende demo-nettbutikk bygd rundt problemet vi vet gjør mest vondt – <strong>medlemspriser og kampanjer som ikke stemmer</strong>.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap narrow">
+    <h2>Problemet i dag</h2>
+    <p>Dagens skogstadsport.no kjører WordPress/WooCommerce med mange tunge tredjepartsverktøy (Klaviyo, Sleeknote, Lipscore, GTM, jQuery). Prislogikken er fordelt på flere systemer: nettbutikk, kampanjeplugin, kundeklubb og ERP. Når disse ikke er enige, ser kunden feil pris – og medlemmer mister medlemsprisen sin. Hver slik feil er en tapt handel eller en support-sak.</p>
+
+    <h2>Løsningen: én prismotor</h2>
+    <p>I denne demoen beregnes hver eneste pris av <strong>én sentral prismotor på serveren</strong>. Nettbutikken, handlekurven og kassen stiller samme spørsmål og får samme svar:</p>
+  </div>
+  <div class="wrap">
+    <figure class="arch-figure reveal">
+      <svg viewBox="0 0 960 380" role="img" aria-labelledby="arch-title" class="arch-svg">
+        <title id="arch-title">Arkitekturdiagram: ERP og kampanjer inn i prismotoren, som gir riktig pris til nettbutikk, kasse og fysisk butikk</title>
+        <g font-family="inherit" font-size="16">
+          <rect x="20" y="40" width="200" height="70" rx="10" class="arch-box"/>
+          <text x="120" y="70" text-anchor="middle" class="arch-text">ERP / lager</text>
+          <text x="120" y="92" text-anchor="middle" class="arch-sub">grunnpris, lager, medlemsdata</text>
+          <rect x="20" y="150" width="200" height="70" rx="10" class="arch-box"/>
+          <text x="120" y="180" text-anchor="middle" class="arch-text">Kampanjer</text>
+          <text x="120" y="202" text-anchor="middle" class="arch-sub">tidsstyrt, målgruppestyrt</text>
+          <rect x="20" y="260" width="200" height="70" rx="10" class="arch-box"/>
+          <text x="120" y="290" text-anchor="middle" class="arch-text">Kundeklubb</text>
+          <text x="120" y="312" text-anchor="middle" class="arch-sub">nivå, poeng, fordeler</text>
+          <rect x="360" y="130" width="240" height="110" rx="14" class="arch-box arch-box-core"/>
+          <text x="480" y="175" text-anchor="middle" class="arch-text-strong">PRISMOTOR</text>
+          <text x="480" y="200" text-anchor="middle" class="arch-sub">«beste pris vinner» + sporbarhet</text>
+          <rect x="740" y="40" width="200" height="70" rx="10" class="arch-box"/>
+          <text x="840" y="82" text-anchor="middle" class="arch-text">Nettbutikk</text>
+          <rect x="740" y="150" width="200" height="70" rx="10" class="arch-box"/>
+          <text x="840" y="180" text-anchor="middle" class="arch-text">Kasse / checkout</text>
+          <text x="840" y="202" text-anchor="middle" class="arch-sub">f.eks. Shopify</text>
+          <rect x="740" y="260" width="200" height="70" rx="10" class="arch-box"/>
+          <text x="840" y="302" text-anchor="middle" class="arch-text">Fysisk butikk / POS</text>
+          <path d="M220 75 C300 75 300 160 360 172" class="arch-line"/>
+          <path d="M220 185 L360 185" class="arch-line"/>
+          <path d="M220 295 C300 295 300 210 360 198" class="arch-line"/>
+          <path d="M600 172 C680 160 680 75 740 75" class="arch-line"/>
+          <path d="M600 185 L740 185" class="arch-line"/>
+          <path d="M600 198 C680 210 680 295 740 295" class="arch-line"/>
+        </g>
+      </svg>
+      <figcaption>ERP-et er bak et adapter-grensesnitt: bytter dere ERP eller går til Shopify, bytter man adapteren – ikke prislogikken.</figcaption>
+    </figure>
+  </div>
+  <div class="wrap narrow">
+    <ul class="pitch-list">
+      <li><strong>«Beste pris vinner»:</strong> kampanjer og medlemsrabatter stables aldri ved et uhell. Reglene er eksplisitte og testbare.</li>
+      <li><strong>Sporbarhet:</strong> hver pris kan forklares – åpne «Hvordan er prisen beregnet?» på en produktside. Support-saker om feil pris blir løst på sekunder.</li>
+      <li><strong>Medlemskampanjer:</strong> kampanjer kan målrettes kun mot medlemmer («Medlemstilbud») og slår automatisk inn når kunden er logget inn.</li>
+      <li><strong>Demo-bryteren:</strong> øverst på siden kan du bytte mellom Ikke innlogget / Medlem / Sølv / Gull og se hele butikken oppdatere seg. Det er dette kundene deres skulle ha opplevd hele tiden.</li>
+    </ul>
+
+    <h2>Fart som salgsargument</h2>
+    <p>Denne demoen er bygd uten tunge rammeverk og uten tredjeparts sporing: serverrendret HTML, moderne bildeformater (AVIF/WebP), selvhostede fonter og minimal JavaScript. Det gir Core Web Vitals i toppklasse – noe Google belønner med bedre synlighet, og kundene med færre avbrutte kjøp.</p>
+
+    <h2>Hva med Shopify?</h2>
+    <p>Går dere til Shopify, er ingenting av dette bortkastet. Frontenden her er plattformuavhengig; prismotoren og ERP-adapteren legges som et tynt lag mellom ERP og Shopify (produkt- og prissynk via API, medlemspriser via app/checkout-integrasjon). Dere kan altså beholde Shopify som kasse og ordresystem – og likevel eie kundeopplevelsen, farten og prislogikken selv.</p>
+
+    <h2>Hva demoen inneholder</h2>
+    <ul class="pitch-list">
+      <li>Komplett butikkfront med ekte produkter og priser fra skogstadsport.no (juli 2026)</li>
+      <li>Kundeklubb-sider med de faktiske fordelene deres (15 % velkomst, 5/7/10 % bonus, fri frakt)</li>
+      <li>Adminpanel der ikke-teknisk personale endrer tekster, produkter, kampanjer, bilder, varsellinje og SEO – uten kode</li>
+      <li>Universell utforming (WCAG 2.1 AA), personvern uten sporing, og full SEO-pakke (strukturerte data, sitemap) klar til å skrus på</li>
+    </ul>
+
+    <h2>Neste steg</h2>
+    <p>Demoen er bygd på offentlig tilgjengelig informasjon og deres egne bilder – som selvsagt tilhører dere. Er dette interessant, tar vi gjerne en prat om pilot: koble prismotoren mot deres faktiske ERP og kjøre skyggeberegning mot dagens priser i to uker. Da ser dere svart på hvitt hvor avvikene oppstår i dag.</p>
+    <p><a class="btn btn-primary btn-large" href="/kundeservice">Ta kontakt</a></p>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

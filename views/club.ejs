@@ -1,0 +1,82 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="page-head page-head-club">
+  <div class="wrap">
+    <p class="section-kicker">Skogstad-klubben</p>
+    <h1>Medlemsfordeler som faktisk fungerer</h1>
+    <p class="page-lead">Bli medlem og få <strong><%= clubConf.welcomePercent %> % velkomstrabatt</strong> på ordinære varer, bonuspoeng på alle kjøp og egne medlemspriser – i nettbutikken og i alle våre <a href="/butikker">17 butikker</a>.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="tier-grid">
+      <div class="tier-card reveal">
+        <h2>Medlem</h2>
+        <p class="tier-big"><%= clubConf.tiers.medlem.bonusPercent %> %</p>
+        <ul>
+          <li>Bonuspoeng på alle kjøp</li>
+          <li>1 000 poeng = <%= clubConf.tiers.medlem.checkPer1000 %> kr bonussjekk</li>
+          <li>Medlemstilbud og rabattkoder</li>
+          <li>Bursdagshilsen med tilbud</li>
+        </ul>
+      </div>
+      <div class="tier-card tier-card-mid reveal">
+        <h2>Sølv</h2>
+        <p class="tier-big"><%= clubConf.tiers.solv.bonusPercent %> %</p>
+        <ul>
+          <li>Alt i Medlem</li>
+          <li>1 000 poeng = <%= clubConf.tiers.solv.checkPer1000 %> kr bonussjekk</li>
+          <li><strong>Fri frakt</strong></li>
+        </ul>
+      </div>
+      <div class="tier-card tier-card-top reveal">
+        <h2>Gull</h2>
+        <p class="tier-big"><%= clubConf.tiers.gull.bonusPercent %> %</p>
+        <ul>
+          <li>Alt i Sølv</li>
+          <li>1 000 poeng = <%= clubConf.tiers.gull.checkPer1000 %> kr bonussjekk</li>
+          <li><strong>Fri frakt</strong> + gavekort ved oppnådd nivå</li>
+        </ul>
+      </div>
+    </div>
+    <p class="tier-note reveal">Du tjener 1 poeng per krone. Sølv og Gull beregnes av poengene dine de siste 12 månedene. Bonussjekker kan brukes i alle norske Skogstad-butikker og i nettbutikken. Verv en venn og få 500 poeng.</p>
+  </div>
+</section>
+
+<section class="section section-tinted">
+  <div class="wrap split">
+    <div class="split-text reveal">
+      <h2>Prøv det selv – akkurat nå</h2>
+      <p>Denne demoen har en <strong>medlemsbryter</strong> øverst på siden. Velg «Medlem», «Sølv» eller «Gull» og se hele butikken oppdatere seg med riktige medlemspriser og bonuspoeng – umiddelbart, på alle sider.</p>
+      <p>Det er slik det skal fungere: <strong>én prismotor, riktig pris, alltid.</strong></p>
+      <button class="btn btn-primary" data-open-member>Åpne medlemsbryteren</button>
+    </div>
+    <div class="split-media reveal">
+      <picture><source srcset="/images/kat-medlem-800.avif" type="image/avif"><source srcset="/images/kat-medlem-800.webp" type="image/webp"><img src="/images/kat-medlem-800.jpg" alt="Skogstad-klubben" width="800" height="600" loading="lazy"></picture>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="innmelding-tittel">
+  <div class="wrap narrow">
+    <h2 id="innmelding-tittel">Meld deg inn</h2>
+    <p>Innmelding er gratis. Velkomstrabatten på <%= clubConf.welcomePercent %> % gjelder ordinære varer og kan ikke kombineres med andre rabatter.</p>
+    <form class="std-form" data-ajax-form data-endpoint="/api/klubb-innmelding" data-success="Takk! I en ferdig løsning ville du nå fått en bekreftelse på e-post. (Demo: innmeldingen er lagret.)">
+      <div class="form-row">
+        <label for="klubb-navn">Navn</label>
+        <input id="klubb-navn" name="navn" type="text" required autocomplete="name">
+      </div>
+      <div class="form-row">
+        <label for="klubb-epost">E-post</label>
+        <input id="klubb-epost" name="epost" type="email" required autocomplete="email">
+      </div>
+      <input type="text" name="nettside" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn btn-primary" type="submit">Bli medlem (demo)</button>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

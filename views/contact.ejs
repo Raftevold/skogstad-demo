@@ -1,0 +1,64 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="page-head">
+  <div class="wrap">
+    <h1>Kundeservice</h1>
+    <p class="page-lead">Vi er her for å hjelpe deg – med retur, reklamasjon, levering, reparasjon og medlemskap.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap contact-layout">
+    <div class="contact-info reveal">
+      <h2>Kontakt oss</h2>
+      <ul class="contact-list">
+        <li><strong>Telefon:</strong> <a href="tel:<%= site.phone.replace(/\s/g,'') %>"><%= site.phone %></a></li>
+        <li><strong>E-post:</strong> <a href="mailto:<%= site.email %>"><%= site.email %></a></li>
+        <li><strong>Adresse:</strong> Skogstad Sport AS, <%= site.address %></li>
+        <li><strong>Org.nr:</strong> <%= site.orgnr %></li>
+      </ul>
+      <h2>Snarveier</h2>
+      <ul class="contact-list">
+        <li><a href="/kjopsvilkar">Kjøpsvilkår, frakt og levering</a></li>
+        <li><a href="/kjopsvilkar#retur">Retur og angrerett</a></li>
+        <li><a href="/kjopsvilkar#reklamasjon">Reklamasjon og reparasjon</a></li>
+        <li><a href="/kundeklubb">Kundeklubben</a></li>
+        <li><a href="/butikker">Finn butikk</a></li>
+      </ul>
+    </div>
+    <div class="contact-form-wrap reveal">
+      <h2>Send oss en melding</h2>
+      <form class="std-form" data-ajax-form data-endpoint="/api/kontakt" data-success="Takk for meldingen! Vi svarer deg så snart vi kan.">
+        <div class="form-row">
+          <label for="k-navn">Navn</label>
+          <input id="k-navn" name="navn" type="text" required autocomplete="name">
+        </div>
+        <div class="form-row">
+          <label for="k-epost">E-post</label>
+          <input id="k-epost" name="epost" type="email" required autocomplete="email">
+        </div>
+        <div class="form-row">
+          <label for="k-emne">Emne</label>
+          <select id="k-emne" name="emne">
+            <option>Spørsmål om ordre</option>
+            <option>Retur og bytte</option>
+            <option>Reklamasjon</option>
+            <option>Reparasjon</option>
+            <option>Kundeklubben</option>
+            <option>Annet</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="k-melding">Melding</label>
+          <textarea id="k-melding" name="melding" rows="6" required></textarea>
+        </div>
+        <input type="text" name="nettside" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn-primary" type="submit">Send melding</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

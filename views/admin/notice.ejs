@@ -1,0 +1,14 @@
+<%- include('partials/top', { pageTitle: 'Varsellinje' }) %>
+<h1>Varsellinje</h1>
+<p class="admin-intro">Varsellinjen vises øverst på alle sider – nyttig ved kampanjer, feriestengt eller driftsmeldinger. Med lenke blir hele linjen klikkbar.</p>
+<section class="admin-card">
+  <form method="post" action="/admin/varsel">
+    <div class="check-row">
+      <label><input type="checkbox" name="enabled" <%= notice.enabled ? 'checked' : '' %>> Vis varsellinjen</label>
+    </div>
+    <div class="field"><label for="v-text">Tekst</label><input id="v-text" name="text" value="<%= notice.text %>" maxlength="200"></div>
+    <div class="field"><label for="v-link">Lenke (valgfri, f.eks. /produkter eller /aktuelt/feriestengt)</label><input id="v-link" name="link" value="<%= notice.link %>"></div>
+    <button class="admin-btn admin-btn-primary" type="submit">Lagre varsellinje</button>
+  </form>
+</section>
+<%- include('partials/bottom') %>

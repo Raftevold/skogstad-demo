@@ -1,0 +1,51 @@
+<div class="demo-ribbon" role="note">
+  <strong>DEMO / KONSEPT</strong>&nbsp;– dette er ikke Skogstads offisielle nettside.
+  <a href="/for-skogstad">Les om konseptet</a>
+</div>
+<% if (notice && notice.enabled && notice.text) { %>
+  <% if (notice.link) { %>
+    <a class="notice-bar" href="<%= notice.link %>"><span><%= notice.text %></span></a>
+  <% } else { %>
+    <div class="notice-bar"><span><%= notice.text %></span></div>
+  <% } %>
+<% } %>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="hovednav" aria-label="Meny">
+      <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+    </button>
+    <a class="logo" href="/" aria-label="Skogstad Sport – til forsiden">
+      <img src="/images/logo-skogstad.svg" alt="Skogstad" width="150" height="28">
+    </a>
+    <nav id="hovednav" class="main-nav" aria-label="Hovedmeny">
+      <ul>
+        <li><a href="/produkter/barn" <%= path.startsWith('/produkter/barn') ? 'aria-current="page"' : '' %>>Barn 1–8</a></li>
+        <li><a href="/produkter/junior" <%= path.startsWith('/produkter/junior') ? 'aria-current="page"' : '' %>>Junior 10–16</a></li>
+        <li><a href="/produkter/dame" <%= path.startsWith('/produkter/dame') ? 'aria-current="page"' : '' %>>Dame</a></li>
+        <li><a href="/produkter/herre" <%= path.startsWith('/produkter/herre') ? 'aria-current="page"' : '' %>>Herre</a></li>
+        <li><a href="/kundeklubb" <%= path === '/kundeklubb' ? 'aria-current="page"' : '' %>>Kundeklubb</a></li>
+        <li><a href="/om-oss" <%= path === '/om-oss' ? 'aria-current="page"' : '' %>>Om oss</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <div class="member-switch">
+        <button class="member-btn" aria-expanded="false" aria-haspopup="true" id="memberBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+          <span class="member-label"><%= tier ? ('Demo: ' + (club.tiers[tier] ? club.tiers[tier].label : tier)) : 'Se medlemspris' %></span>
+        </button>
+        <div class="member-menu" role="menu" aria-label="Demo: velg medlemsnivå">
+          <p class="member-menu-hint">Demo-modus: se siden slik et innlogget medlem ser den.</p>
+          <a role="menuitem" href="/demo/medlem/av" class="<%= !tier ? 'is-active' : '' %>">Ikke innlogget</a>
+          <a role="menuitem" href="/demo/medlem/medlem" class="<%= tier === 'medlem' ? 'is-active' : '' %>">Medlem (5 % bonus)</a>
+          <a role="menuitem" href="/demo/medlem/solv" class="<%= tier === 'solv' ? 'is-active' : '' %>">Sølv (7 % + fri frakt)</a>
+          <a role="menuitem" href="/demo/medlem/gull" class="<%= tier === 'gull' ? 'is-active' : '' %>">Gull (10 % + fri frakt)</a>
+        </div>
+      </div>
+      <a class="cart-link" href="/handlekurv" aria-label="Handlekurv">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+        <span class="cart-count" data-cart-count hidden>0</span>
+      </a>
+    </div>
+  </div>
+</header>
+<main id="hovedinnhold">

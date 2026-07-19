@@ -1,0 +1,144 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="hero">
+  <picture class="hero-media">
+    <source media="(max-width: 700px)" srcset="/images/hero-sommer-mobil.avif" type="image/avif">
+    <source media="(max-width: 700px)" srcset="/images/hero-sommer-mobil.webp" type="image/webp">
+    <source srcset="/images/hero-sommer-1920.avif" type="image/avif">
+    <source srcset="/images/hero-sommer-1920.webp" type="image/webp">
+    <img src="/images/hero-sommer-1920.jpg" alt="Familie på fjelltur i Skogstad-klær" width="1920" height="960" fetchpriority="high">
+  </picture>
+  <div class="hero-overlay"></div>
+  <div class="wrap hero-content">
+    <p class="hero-kicker">Innvik i Nordfjord · siden 1937</p>
+    <h1 class="hero-title"><%= home.heroTitle %></h1>
+    <p class="hero-subtitle"><%= home.heroSubtitle %></p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary btn-large" href="<%= home.heroCtaLink %>"><%= home.heroCtaText %></a>
+      <a class="btn btn-ghost btn-large" href="<%= home.heroCta2Link %>"><%= home.heroCta2Text %></a>
+    </div>
+  </div>
+  <svg class="hero-ridge" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 90 L0 60 L180 30 L360 55 L540 15 L720 45 L900 8 L1080 40 L1260 22 L1440 50 L1440 90 Z" fill="currentColor"/></svg>
+</section>
+
+<section class="usp-band" aria-label="Hvorfor Skogstad">
+  <div class="wrap usp-grid">
+    <% (home.usps || []).forEach(function (u) { %>
+      <div class="usp reveal">
+        <span class="usp-icon" aria-hidden="true">
+          <% if (u.icon === 'shield') { %><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l8 3v6c0 4.5-3.2 7.6-8 9-4.8-1.4-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+          <% } else if (u.icon === 'tag') { %><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 13l-7 7-9-9V4h7l9 9z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
+          <% } else if (u.icon === 'leaf') { %><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 19c0-8 5-14 14-14 0 9-5 14-14 14z"/><path d="M5 19c3-5 7-8 11-10"/></svg>
+          <% } else { %><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 19l6-10 4 6 3-4 5 8H3z"/><circle cx="17" cy="6" r="2"/></svg><% } %>
+        </span>
+        <h2 class="usp-title"><%= u.title %></h2>
+        <p><%= u.text %></p>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+<section class="section" aria-label="Kategorier">
+  <div class="wrap">
+    <div class="cat-grid">
+      <a class="cat-card reveal" href="/produkter/barn">
+        <picture><source srcset="/images/tile-7-800.avif" type="image/avif"><source srcset="/images/tile-7-800.webp" type="image/webp"><img src="/images/tile-7-800.jpg" alt="Barn i Skogstad turklær" width="800" height="1000" loading="lazy"></picture>
+        <span class="cat-label">Barn 1–8 år</span>
+      </a>
+      <a class="cat-card reveal" href="/produkter/junior">
+        <picture><source srcset="/images/kat-junior-800.avif" type="image/avif"><source srcset="/images/kat-junior-800.webp" type="image/webp"><img src="/images/kat-junior-800.jpg" alt="Junior i Skogstad turklær" width="800" height="1000" loading="lazy"></picture>
+        <span class="cat-label">Junior 10–16 år</span>
+      </a>
+      <a class="cat-card reveal" href="/produkter/dame">
+        <picture><source srcset="/images/tile-14-1-800.avif" type="image/avif"><source srcset="/images/tile-14-1-800.webp" type="image/webp"><img src="/images/tile-14-1-800.jpg" alt="Dame i Skogstad turklær" width="800" height="1000" loading="lazy"></picture>
+        <span class="cat-label">Dame</span>
+      </a>
+      <a class="cat-card reveal" href="/produkter/herre">
+        <picture><source srcset="/images/kat-herre-800.avif" type="image/avif"><source srcset="/images/kat-herre-800.webp" type="image/webp"><img src="/images/kat-herre-800.jpg" alt="Herre i Skogstad turklær" width="800" height="1000" loading="lazy"></picture>
+        <span class="cat-label">Herre</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tinted" aria-labelledby="fav-tittel">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 id="fav-tittel"><%= home.favTitle %></h2>
+      <p><%= home.favText %></p>
+    </div>
+    <div class="product-grid">
+      <% featured.forEach(function (p) { %>
+        <%- include('partials/product-card', { p, pr: prices[p.slug] }) %>
+      <% }) %>
+    </div>
+    <p class="section-more reveal"><a class="btn btn-secondary" href="/produkter">Se alle produkter</a></p>
+  </div>
+</section>
+
+<section class="club-band" aria-labelledby="klubb-tittel">
+  <div class="wrap club-band-inner">
+    <div class="club-band-text reveal">
+      <p class="section-kicker">Skogstad-klubben</p>
+      <h2 id="klubb-tittel"><%= home.clubTitle %></h2>
+      <p><%= home.clubText %></p>
+      <div class="club-tiers">
+        <div class="club-tier"><strong>Medlem</strong><span>5 % bonus</span></div>
+        <div class="club-tier"><strong>Sølv</strong><span>7 % bonus + fri frakt</span></div>
+        <div class="club-tier"><strong>Gull</strong><span>10 % bonus + fri frakt</span></div>
+      </div>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="/kundeklubb">Bli medlem – få 15 % velkomstrabatt</a>
+        <button class="btn btn-ghost" data-open-member>Prøv demo: se medlemspriser</button>
+      </div>
+    </div>
+    <div class="club-band-media reveal">
+      <picture><source srcset="/images/kat-medlem-800.avif" type="image/avif"><source srcset="/images/kat-medlem-800.webp" type="image/webp"><img src="/images/kat-medlem-800.jpg" alt="Skogstad-klubben medlemsfordeler" width="800" height="600" loading="lazy"></picture>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="historie-tittel">
+  <div class="wrap split">
+    <div class="split-media reveal">
+      <picture><source srcset="/images/tile-15-1-800.avif" type="image/avif"><source srcset="/images/tile-15-1-800.webp" type="image/webp"><img src="/images/tile-15-1-800.jpg" alt="Skogstad-klær i norsk natur" width="800" height="1000" loading="lazy"></picture>
+    </div>
+    <div class="split-text reveal">
+      <p class="section-kicker">Siden 1937</p>
+      <h2 id="historie-tittel"><%= home.historyTitle %></h2>
+      <p><%= home.historyText %></p>
+      <a class="btn btn-secondary" href="/om-oss">Les historien vår</a>
+    </div>
+  </div>
+</section>
+
+<section class="jakt-band" aria-labelledby="jakt-tittel">
+  <div class="wrap jakt-inner">
+    <div class="jakt-content reveal">
+      <p class="section-kicker">Haukåsen-kolleksjonen</p>
+      <h2 id="jakt-tittel"><%= home.jaktTitle %></h2>
+      <p><%= home.jaktText %></p>
+      <a class="btn btn-primary" href="/produkt/m-haukasen-jakke">Se jaktjakken</a>
+    </div>
+    <a class="jakt-product reveal" href="/produkt/m-haukasen-jakke" aria-label="M Haukåsen, jakke – se produktet">
+      <picture>
+        <source srcset="/images/prod-haukasen-jakke-600.avif" type="image/avif">
+        <source srcset="/images/prod-haukasen-jakke-600.webp" type="image/webp">
+        <img src="/images/prod-haukasen-jakke-600.jpg" alt="M Haukåsen teknisk jaktjakke i Burnt Olive" width="600" height="600" loading="lazy">
+      </picture>
+    </a>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="butikker-tittel">
+  <div class="wrap stores-teaser reveal">
+    <div>
+      <h2 id="butikker-tittel"><%= home.storesTitle %></h2>
+      <p><%= home.storesText %></p>
+    </div>
+    <a class="btn btn-secondary" href="/butikker">Finn din butikk</a>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

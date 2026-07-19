@@ -1,0 +1,19 @@
+<%- include('partials/top', { pageTitle: 'Butikker' }) %>
+<h1>Butikker</h1>
+<section class="admin-card">
+  <form method="post" action="/admin/butikker">
+    <div data-repeat-list>
+      <% stores.forEach(function (s, i) { %>
+        <div class="field-row repeat-row">
+          <div class="field"><label for="st-n-<%= i %>">Navn</label><input id="st-n-<%= i %>" name="name" value="<%= s.name %>"></div>
+          <div class="field"><label for="st-p-<%= i %>">Sted</label><input id="st-p-<%= i %>" name="place" value="<%= s.place %>"></div>
+          <div class="field wide"><label for="st-o-<%= i %>">Notat (adresse/åpningstider)</label><input id="st-o-<%= i %>" name="note" value="<%= s.note %>"></div>
+          <button type="button" class="admin-btn admin-btn-danger" data-remove-row>Fjern</button>
+        </div>
+      <% }) %>
+    </div>
+    <button type="button" class="admin-btn" data-add-row>+ Legg til butikk</button>
+    <button class="admin-btn admin-btn-primary" type="submit">Lagre butikker</button>
+  </form>
+</section>
+<%- include('partials/bottom') %>

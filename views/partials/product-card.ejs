@@ -1,0 +1,26 @@
+<%
+// Forventar: p (produkt), pr (prisobjekt frå prismotoren)
+%>
+<a class="product-card reveal" href="/produkt/<%= p.slug %>">
+  <div class="product-card-media">
+    <% if (pr.discountPercent > 0) { %>
+      <span class="badge <%= pr.memberOnly ? 'badge-member' : 'badge-sale' %>">
+        <%= pr.memberOnly ? 'Medlemspris' : ('−' + pr.discountPercent + ' %') %>
+      </span>
+    <% } %>
+    <picture>
+      <source srcset="<%= p.image %>-600.avif" type="image/avif">
+      <source srcset="<%= p.image %>-600.webp" type="image/webp">
+      <img src="<%= p.image %>-600.jpg" alt="<%= p.name %> i fargen <%= p.color %>" width="600" height="600" loading="lazy">
+    </picture>
+  </div>
+  <div class="product-card-body">
+    <h3 class="product-card-name"><%= p.name %></h3>
+    <p class="product-card-sub"><%= p.subtitle %><%= p.color ? ', ' + p.color : '' %></p>
+    <p class="product-card-price">
+      <span class="price-now <%= pr.discountPercent > 0 ? 'is-sale' : '' %>"><%= pr.final %>,-</span>
+      <% if (pr.discountPercent > 0) { %><s class="price-before"><%= pr.ordinary %>,-</s><% } %>
+    </p>
+    <% if (pr.points > 0) { %><p class="product-card-points">+ <%= pr.points %> bonuspoeng</p><% } %>
+  </div>
+</a>

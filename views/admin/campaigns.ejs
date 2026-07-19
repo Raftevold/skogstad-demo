@@ -1,0 +1,28 @@
+<%- include('partials/top', { pageTitle: 'Kampanjer' }) %>
+<h1>Kampanjer</h1>
+<p class="admin-intro">Kampanjer styrer rabatter i hele butikken. «Kun medlemmer» gir medlemstilbud som automatisk vises for innloggede medlemmer. Prismotoren lar aldri rabatter stables – beste pris vinner.</p>
+<p><a class="admin-btn admin-btn-primary" href="/admin/kampanjer/ny">+ Ny kampanje</a></p>
+<div class="table-scroll">
+<table class="admin-table">
+  <thead><tr><th scope="col">Navn</th><th scope="col">Rabatt</th><th scope="col">Målgruppe</th><th scope="col">Omfang</th><th scope="col">Periode</th><th scope="col">Status</th><th scope="col">Handling</th></tr></thead>
+  <tbody>
+    <% campaigns.forEach(function (c) { %>
+      <tr>
+        <td><a href="/admin/kampanjer/<%= c.id %>"><%= c.name %></a></td>
+        <td>−<%= c.percent %> %</td>
+        <td><%= c.audience === 'medlem' ? 'Kun medlemmer' : 'Alle' %></td>
+        <td><%= c.scope.type === 'alle' ? 'Hele butikken' : c.scope.type === 'kategori' ? ('Kategori: ' + c.scope.category) : ((c.scope.slugs || []).length + ' produkter') %></td>
+        <td><%= c.from || '–' %> → <%= c.to || '–' %></td>
+        <td><%= c.active ? 'Aktiv' : 'Av' %></td>
+        <td class="row-actions">
+          <a class="admin-btn" href="/admin/kampanjer/<%= c.id %>">Rediger</a>
+          <form method="post" action="/admin/kampanjer/<%= c.id %>/slett" data-confirm="Slette kampanjen «<%= c.name %>»?">
+            <button class="admin-btn admin-btn-danger" type="submit">Slett</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+</div>
+<%- include('partials/bottom') %>

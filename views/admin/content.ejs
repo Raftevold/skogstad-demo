@@ -1,0 +1,86 @@
+<%- include('partials/top', { pageTitle: 'Innhold' }) %>
+<h1>Innhold</h1>
+
+<section class="admin-card">
+  <h2>Forsiden</h2>
+  <form method="post" action="/admin/innhold/home">
+    <div class="field"><label for="h-title">Hovedoverskrift (hero)</label><input id="h-title" name="heroTitle" value="<%= home.heroTitle %>"></div>
+    <div class="field"><label for="h-sub">Undertekst (hero)</label><textarea id="h-sub" name="heroSubtitle" rows="2"><%= home.heroSubtitle %></textarea></div>
+    <div class="field-row">
+      <div class="field"><label for="h-cta">Knapp 1 – tekst</label><input id="h-cta" name="heroCtaText" value="<%= home.heroCtaText %>"></div>
+      <div class="field"><label for="h-ctal">Knapp 1 – lenke</label><input id="h-ctal" name="heroCtaLink" value="<%= home.heroCtaLink %>"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="h-cta2">Knapp 2 – tekst</label><input id="h-cta2" name="heroCta2Text" value="<%= home.heroCta2Text %>"></div>
+      <div class="field"><label for="h-cta2l">Knapp 2 – lenke</label><input id="h-cta2l" name="heroCta2Link" value="<%= home.heroCta2Link %>"></div>
+    </div>
+    <h3>Fordelspunkter (USP)</h3>
+    <% (home.usps || []).forEach(function (u, i) { %>
+      <div class="field-row">
+        <div class="field"><label for="usp-t-<%= i %>">Tittel <%= i + 1 %></label><input id="usp-t-<%= i %>" name="uspTitle" value="<%= u.title %>"></div>
+        <div class="field wide"><label for="usp-x-<%= i %>">Tekst <%= i + 1 %></label><input id="usp-x-<%= i %>" name="uspText" value="<%= u.text %>"></div>
+      </div>
+    <% }) %>
+    <h3>Seksjoner</h3>
+    <div class="field-row">
+      <div class="field"><label for="favT">Favoritter – tittel</label><input id="favT" name="favTitle" value="<%= home.favTitle %>"></div>
+      <div class="field wide"><label for="favX">Favoritter – tekst</label><input id="favX" name="favText" value="<%= home.favText %>"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="cluT">Kundeklubb – tittel</label><input id="cluT" name="clubTitle" value="<%= home.clubTitle %>"></div>
+      <div class="field wide"><label for="cluX">Kundeklubb – tekst</label><textarea id="cluX" name="clubText" rows="2"><%= home.clubText %></textarea></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="hisT">Historie – tittel</label><input id="hisT" name="historyTitle" value="<%= home.historyTitle %>"></div>
+      <div class="field wide"><label for="hisX">Historie – tekst</label><textarea id="hisX" name="historyText" rows="2"><%= home.historyText %></textarea></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="jakT">Jakt – tittel</label><input id="jakT" name="jaktTitle" value="<%= home.jaktTitle %>"></div>
+      <div class="field wide"><label for="jakX">Jakt – tekst</label><textarea id="jakX" name="jaktText" rows="2"><%= home.jaktText %></textarea></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="stoT">Butikker – tittel</label><input id="stoT" name="storesTitle" value="<%= home.storesTitle %>"></div>
+      <div class="field wide"><label for="stoX">Butikker – tekst</label><textarea id="stoX" name="storesText" rows="2"><%= home.storesText %></textarea></div>
+    </div>
+    <button class="admin-btn admin-btn-primary" type="submit">Lagre forsiden</button>
+  </form>
+</section>
+
+<section class="admin-card">
+  <h2>Om oss</h2>
+  <form method="post" action="/admin/innhold/about">
+    <div class="field"><label for="ab-intro">Innledning</label><textarea id="ab-intro" name="intro" rows="3"><%= about.intro %></textarea></div>
+    <h3>Tidslinje</h3>
+    <div data-repeat-list>
+      <% (about.timeline || []).forEach(function (t, i) { %>
+        <div class="field-row repeat-row">
+          <div class="field slim"><label for="tl-y-<%= i %>">Årstall</label><input id="tl-y-<%= i %>" name="tlYear" value="<%= t.year %>"></div>
+          <div class="field wide"><label for="tl-t-<%= i %>">Tekst</label><input id="tl-t-<%= i %>" name="tlText" value="<%= t.text %>"></div>
+          <button type="button" class="admin-btn admin-btn-danger" data-remove-row>Fjern</button>
+        </div>
+      <% }) %>
+    </div>
+    <button type="button" class="admin-btn" data-add-row>+ Legg til rad</button>
+    <button class="admin-btn admin-btn-primary" type="submit">Lagre om oss</button>
+  </form>
+</section>
+
+<section class="admin-card">
+  <h2>Bærekraft</h2>
+  <form method="post" action="/admin/innhold/sustainability">
+    <div class="field"><label for="su-intro">Innledning</label><textarea id="su-intro" name="intro" rows="3"><%= sus.intro %></textarea></div>
+    <h3>Punkter</h3>
+    <div data-repeat-list>
+      <% (sus.points || []).forEach(function (p, i) { %>
+        <div class="field-row repeat-row">
+          <div class="field"><label for="su-t-<%= i %>">Tittel</label><input id="su-t-<%= i %>" name="pTitle" value="<%= p.title %>"></div>
+          <div class="field wide"><label for="su-x-<%= i %>">Tekst</label><input id="su-x-<%= i %>" name="pText" value="<%= p.text %>"></div>
+          <button type="button" class="admin-btn admin-btn-danger" data-remove-row>Fjern</button>
+        </div>
+      <% }) %>
+    </div>
+    <button type="button" class="admin-btn" data-add-row>+ Legg til rad</button>
+    <button class="admin-btn admin-btn-primary" type="submit">Lagre bærekraft</button>
+  </form>
+</section>
+<%- include('partials/bottom') %>

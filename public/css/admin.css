@@ -1,0 +1,119 @@
+/* Adminpanel – Skogstad demo */
+* { box-sizing: border-box; }
+body.admin-body {
+  margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: #f2f4f1; color: #1c241e; font-size: 15px; line-height: 1.55;
+}
+h1 { font-size: 1.6rem; margin: 0 0 14px; }
+h2 { font-size: 1.15rem; margin: 0 0 12px; }
+h3 { font-size: 1rem; margin: 18px 0 10px; }
+a { color: #1f5236; }
+
+.admin-header {
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  background: #12241a; color: #fff; padding: 10px 20px;
+}
+.admin-logo { color: #fff; text-decoration: none; font-weight: 800; font-size: 1.05rem; }
+.admin-logo span { color: #8fb89d; font-weight: 500; }
+.admin-nav { display: flex; flex-wrap: wrap; gap: 2px; }
+.admin-nav a { color: #cfdcd2; text-decoration: none; padding: 7px 11px; border-radius: 7px; font-size: 0.92rem; }
+.admin-nav a:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
+.admin-nav a[aria-current="page"] { background: #2d5e42; color: #fff; }
+.admin-header-right { margin-left: auto; display: flex; gap: 14px; }
+.admin-header-right a { color: #cfdcd2; text-decoration: none; font-size: 0.92rem; }
+.admin-header-right a:hover { color: #fff; }
+
+.admin-main { max-width: 1080px; margin: 0 auto; padding: 26px 20px 60px; }
+.admin-intro { color: #55605a; max-width: 70ch; }
+.admin-flash {
+  background: #dff1e3; border: 1px solid #9fcaab; color: #1c5231;
+  padding: 10px 16px; border-radius: 9px; font-weight: 600;
+}
+
+.admin-card {
+  background: #fff; border-radius: 12px; padding: 22px;
+  box-shadow: 0 1px 3px rgba(18, 36, 25, 0.09); margin-bottom: 22px;
+}
+
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin-bottom: 24px; }
+.stat-card {
+  background: #fff; border-radius: 12px; padding: 18px; text-decoration: none; color: inherit;
+  box-shadow: 0 1px 3px rgba(18, 36, 25, 0.09); display: flex; flex-direction: column;
+}
+.stat-card strong { font-size: 1.9rem; color: #1b3a28; }
+.stat-card span { color: #55605a; }
+.stat-card:hover { outline: 2px solid #2d5e42; }
+
+.field { margin-bottom: 14px; min-width: 0; }
+.field label, .field legend { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; }
+.field input, .field select, .field textarea {
+  width: 100%; padding: 9px 12px; font: inherit; border: 1.5px solid #cdd5cd; border-radius: 8px; background: #fff;
+}
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid #2d5e42; border-color: #2d5e42; }
+.field-hint { font-size: 0.82rem; color: #55605a; margin: 6px 0 0; }
+.field-row { display: flex; gap: 14px; flex-wrap: wrap; }
+.field-row .field { flex: 1 1 200px; }
+.field-row .field.wide { flex: 2 1 320px; }
+.field-row .field.slim { flex: 0 1 130px; }
+.check-row { display: flex; gap: 22px; flex-wrap: wrap; margin: 14px 0; }
+.check-row label { font-weight: 600; }
+.check-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px; }
+
+.repeat-row { align-items: flex-end; border-bottom: 1px dashed #e2e6e1; padding-bottom: 12px; margin-bottom: 12px; }
+.repeat-row .admin-btn-danger { margin-bottom: 14px; }
+
+.admin-btn {
+  display: inline-block; font: inherit; font-weight: 600; font-size: 0.92rem;
+  background: #eef1ee; color: #1c241e; border: 1.5px solid #cdd5cd;
+  padding: 8px 16px; border-radius: 8px; cursor: pointer; text-decoration: none;
+}
+.admin-btn:hover { background: #e2e8e2; }
+.admin-btn-primary { background: #1b3a28; border-color: #1b3a28; color: #fff; }
+.admin-btn-primary:hover { background: #2d5e42; }
+.admin-btn-danger { background: #fff; border-color: #d9a09a; color: #93271b; }
+.admin-btn-danger:hover { background: #fbe9e7; }
+
+.admin-table { width: 100%; border-collapse: collapse; background: #fff; }
+.admin-table th, .admin-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #e8ebe7; vertical-align: middle; }
+.admin-table th { background: #f5f7f4; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.admin-table input[type="number"] { width: 90px; padding: 7px 9px; font: inherit; border: 1.5px solid #cdd5cd; border-radius: 7px; }
+.table-scroll { overflow-x: auto; }
+.row-actions { display: flex; gap: 8px; align-items: center; }
+.row-actions form { margin: 0; }
+
+.image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+.image-item { margin: 0; background: #f5f7f4; border-radius: 10px; overflow: hidden; }
+.image-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+.image-item figcaption { padding: 10px; font-size: 0.8rem; display: flex; flex-direction: column; gap: 6px; }
+.image-item code { word-break: break-all; }
+
+.message-card .message-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.message-data { margin: 0 0 12px; }
+.message-data div { display: flex; gap: 10px; padding-block: 3px; }
+.message-data dt { font-weight: 700; min-width: 90px; }
+.message-data dd { margin: 0; overflow-wrap: anywhere; }
+
+.seo-block { border: 1px solid #e2e6e1; border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
+.seo-block legend { font-weight: 700; padding-inline: 6px; }
+
+.admin-list { padding-left: 20px; }
+.admin-list li { margin-bottom: 6px; }
+
+.admin-login-body { display: flex; min-height: 100vh; align-items: center; justify-content: center; background: #12241a; }
+.admin-login {
+  background: #fff; border-radius: 14px; padding: 40px; width: min(380px, 92vw); text-align: center;
+}
+.admin-login h1 { margin: 12px 0 2px; }
+.admin-login p { color: #55605a; margin-top: 0; }
+.admin-login img { margin-inline: auto; }
+.admin-login form { text-align: left; margin-top: 18px; }
+.admin-login label { display: block; font-weight: 600; margin-bottom: 6px; }
+.admin-login input {
+  width: 100%; padding: 11px 13px; font: inherit; border: 1.5px solid #cdd5cd; border-radius: 8px; margin-bottom: 14px;
+}
+.admin-login button {
+  width: 100%; padding: 12px; font: inherit; font-weight: 700; color: #fff;
+  background: #1b3a28; border: 0; border-radius: 8px; cursor: pointer;
+}
+.admin-login button:hover { background: #2d5e42; }
+.admin-error { background: #fbe9e7; border: 1px solid #d9a09a; color: #93271b; padding: 10px 14px; border-radius: 8px; }

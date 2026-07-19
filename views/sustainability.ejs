@@ -1,0 +1,38 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="page-head">
+  <div class="wrap">
+    <p class="section-kicker">Bærekraft</p>
+    <h1>Et steg i riktig retning</h1>
+    <p class="page-lead"><%= sus.intro %></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="points-grid">
+      <% (sus.points || []).forEach(function (p) { %>
+        <div class="point-card reveal">
+          <h2><%= p.title %></h2>
+          <p><%= p.text %></p>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tinted">
+  <div class="wrap split">
+    <div class="split-text reveal">
+      <h2>Plagg som varer, er det mest bærekraftige valget</h2>
+      <p>Derfor står Skogstad-garantien i sentrum: kvalitet som tåler norsk vær, reklamasjonsrett i 2 år (5 år på varige varer) – og en reparasjonstjeneste som gir yndlingsplagget ditt et lengre liv.</p>
+      <a class="btn btn-secondary" href="/kundeservice">Kontakt oss om reparasjon</a>
+    </div>
+    <div class="split-media reveal">
+      <picture><source srcset="/images/tile-5-1-800.avif" type="image/avif"><source srcset="/images/tile-5-1-800.webp" type="image/webp"><img src="/images/tile-5-1-800.jpg" alt="Skogstad-plagg i naturen" width="800" height="1000" loading="lazy"></picture>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

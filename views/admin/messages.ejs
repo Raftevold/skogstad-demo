@@ -1,0 +1,21 @@
+<%- include('partials/top', { pageTitle: 'Meldinger' }) %>
+<h1>Meldinger</h1>
+<p class="admin-intro">Innsendte kontaktskjema og kundeklubb-innmeldinger. (I en ferdig løsning kan disse også videresendes til e-post.)</p>
+<% if (messages.length === 0) { %><p>Ingen meldinger ennå.</p><% } %>
+<% messages.forEach(function (m) { %>
+  <section class="admin-card message-card">
+    <header class="message-head">
+      <strong><%= m.kind === 'kontakt' ? 'Kontaktskjema' : 'Kundeklubb-innmelding' %></strong>
+      <time datetime="<%= m.created_at %>"><%= new Date(m.created_at).toLocaleString('nb-NO') %></time>
+    </header>
+    <dl class="message-data">
+      <% Object.entries(m.data).forEach(function ([k, v]) { %>
+        <div><dt><%= k %></dt><dd><%= v %></dd></div>
+      <% }) %>
+    </dl>
+    <form method="post" action="/admin/meldinger/<%= m.id %>/slett" data-confirm="Slette meldingen?">
+      <button class="admin-btn admin-btn-danger" type="submit">Slett</button>
+    </form>
+  </section>
+<% }) %>
+<%- include('partials/bottom') %>

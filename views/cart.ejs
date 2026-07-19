@@ -1,0 +1,42 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="page-head">
+  <div class="wrap"><h1>Handlekurv</h1></div>
+</section>
+
+<section class="section">
+  <div class="wrap cart-layout">
+    <div class="cart-lines" data-cart-lines aria-live="polite">
+      <p class="cart-loading">Laster handlekurven …</p>
+    </div>
+    <aside class="cart-summary" data-cart-summary hidden>
+      <h2>Oppsummering</h2>
+      <dl class="summary-list">
+        <div><dt>Ordinær pris</dt><dd data-sum-ordinary>–</dd></div>
+        <div class="is-saving" data-sum-saved-row hidden><dt>Du sparer</dt><dd data-sum-saved>–</dd></div>
+        <div><dt>Frakt</dt><dd data-sum-shipping>Beregnes i kassen</dd></div>
+        <div class="summary-total"><dt>Å betale</dt><dd data-sum-total>–</dd></div>
+      </dl>
+      <p class="summary-points" data-sum-points hidden></p>
+      <p class="summary-tier" data-sum-tier hidden></p>
+      <button class="btn btn-primary btn-large btn-block" data-checkout>Gå til kassen</button>
+      <p class="summary-note">Prisene beregnes av prismotoren på serveren – identisk logikk som kassen bruker.</p>
+    </aside>
+  </div>
+  <div class="wrap cart-empty" data-cart-empty hidden>
+    <p>Handlekurven din er tom.</p>
+    <a class="btn btn-secondary" href="/produkter">Se produktene</a>
+  </div>
+</section>
+
+<div class="modal" data-checkout-modal hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-tittel">
+    <h2 id="modal-tittel">Demo-stopp: kassen</h2>
+    <p>I denne demoen stopper kjøpsløpet her. I en ferdig løsning kobles dette steget til betalings- og ordreløsningen dere velger – for eksempel Shopify Checkout, med priser og medlemsrabatter levert av den samme prismotoren som du nettopp så i handlekurven.</p>
+    <p>Det er nettopp dét som er poenget: <strong>prisen kunden ser, er prisen kunden betaler.</strong></p>
+    <button class="btn btn-primary" data-close-modal>Lukk</button>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

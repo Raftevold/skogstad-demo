@@ -1,0 +1,42 @@
+<%- include('partials/top', { pageTitle: p ? 'Rediger produkt' : 'Nytt produkt' }) %>
+<h1><%= p ? 'Rediger: ' + p.name : 'Nytt produkt' %></h1>
+<section class="admin-card">
+  <form method="post" action="/admin/produkter/lagre">
+    <% if (p) { %><input type="hidden" name="id" value="<%= p.id %>"><% } %>
+    <div class="field-row">
+      <div class="field wide"><label for="p-name">Navn</label><input id="p-name" name="name" required value="<%= p ? p.name : '' %>"></div>
+      <div class="field"><label for="p-slug">Slug (URL)</label><input id="p-slug" name="slug" value="<%= p ? p.slug : '' %>" placeholder="genereres om tom"></div>
+    </div>
+    <div class="field-row">
+      <div class="field wide"><label for="p-sub">Undertittel</label><input id="p-sub" name="subtitle" value="<%= p ? p.subtitle : '' %>"></div>
+      <div class="field"><label for="p-color">Farge</label><input id="p-color" name="color" value="<%= p ? p.color : '' %>"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label for="p-cat">Kategori</label>
+        <select id="p-cat" name="category">
+          <% ['barn','junior','dame','herre'].forEach(function (c) { %>
+            <option value="<%= c %>" <%= p && p.category === c ? 'selected' : '' %>><%= c %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="field"><label for="p-price">Ordinær pris (kr)</label><input id="p-price" name="price" type="number" min="0" required value="<%= p ? p.price : '' %>"></div>
+      <div class="field"><label for="p-sort">Sortering</label><input id="p-sort" name="sort" type="number" value="<%= p ? p.sort : 0 %>"></div>
+    </div>
+    <div class="field">
+      <label for="p-img">Bilde</label>
+      <input id="p-img" name="image" value="<%= p ? p.image : '' %>" placeholder="/images/prod-… eller /media/…">
+      <p class="field-hint">Bruk et navn fra <a href="/admin/bilder">Bilder</a> (f.eks. /media/mitt-bilde.webp) eller en innebygget bildesti (/images/prod-roros).</p>
+    </div>
+    <div class="field"><label for="p-sizes">Størrelser (kommaseparert)</label><input id="p-sizes" name="sizes" value="<%= p ? (p.sizes || []).join(', ') : '' %>"></div>
+    <div class="field"><label for="p-desc">Beskrivelse</label><textarea id="p-desc" name="description" rows="4"><%= p ? p.description : '' %></textarea></div>
+    <div class="field"><label for="p-specs">Produktdetaljer (én per linje)</label><textarea id="p-specs" name="specs" rows="5"><%= p ? (p.specs || []).join('\n') : '' %></textarea></div>
+    <div class="check-row">
+      <label><input type="checkbox" name="active" <%= !p || p.active ? 'checked' : '' %>> Aktiv (synlig i butikken)</label>
+      <label><input type="checkbox" name="featured" <%= p && p.featured ? 'checked' : '' %>> Fremhevet på forsiden</label>
+      <label><input type="checkbox" name="placeholder" <%= p && p.placeholder ? 'checked' : '' %>> Placeholder (uverifisert innhold)</label>
+    </div>
+    <button class="admin-btn admin-btn-primary" type="submit">Lagre produkt</button>
+    <a class="admin-btn" href="/admin/produkter">Avbryt</a>
+  </form>
+</section>
+<%- include('partials/bottom') %>

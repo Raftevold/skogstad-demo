@@ -1,0 +1,52 @@
+<%- include('partials/top', { pageTitle: c ? 'Rediger kampanje' : 'Ny kampanje' }) %>
+<h1><%= c ? 'Rediger: ' + c.name : 'Ny kampanje' %></h1>
+<section class="admin-card">
+  <form method="post" action="/admin/kampanjer/lagre">
+    <% if (c) { %><input type="hidden" name="id" value="<%= c.id %>"><% } %>
+    <div class="field-row">
+      <div class="field wide"><label for="c-name">Navn</label><input id="c-name" name="name" required value="<%= c ? c.name : '' %>"></div>
+      <div class="field slim"><label for="c-pct">Rabatt (%)</label><input id="c-pct" name="percent" type="number" min="1" max="90" required value="<%= c ? c.percent : 20 %>"></div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="c-aud">Målgruppe</label>
+        <select id="c-aud" name="audience">
+          <option value="alle" <%= !c || c.audience === 'alle' ? 'selected' : '' %>>Alle kunder</option>
+          <option value="medlem" <%= c && c.audience === 'medlem' ? 'selected' : '' %>>Kun medlemmer (medlemstilbud)</option>
+        </select>
+      </div>
+      <div class="field"><label for="c-from">Fra dato (valgfri)</label><input id="c-from" name="from" type="date" value="<%= c ? c.from : '' %>"></div>
+      <div class="field"><label for="c-to">Til dato (valgfri)</label><input id="c-to" name="to" type="date" value="<%= c ? c.to : '' %>"></div>
+    </div>
+    <div class="field">
+      <label for="c-scope">Omfang</label>
+      <select id="c-scope" name="scopeType" data-scope-select>
+        <option value="alle" <%= !c || c.scope.type === 'alle' ? 'selected' : '' %>>Hele butikken</option>
+        <option value="kategori" <%= c && c.scope.type === 'kategori' ? 'selected' : '' %>>Én kategori</option>
+        <option value="produkter" <%= c && c.scope.type === 'produkter' ? 'selected' : '' %>>Utvalgte produkter</option>
+      </select>
+    </div>
+    <div class="field" data-scope-panel="kategori" <%= c && c.scope.type === 'kategori' ? '' : 'hidden' %>>
+      <label for="c-cat">Kategori</label>
+      <select id="c-cat" name="scopeCategory">
+        <% ['barn','junior','dame','herre'].forEach(function (k) { %>
+          <option value="<%= k %>" <%= c && c.scope.category === k ? 'selected' : '' %>><%= k %></option>
+        <% }) %>
+      </select>
+    </div>
+    <fieldset class="field" data-scope-panel="produkter" <%= c && c.scope.type === 'produkter' ? '' : 'hidden' %>>
+      <legend>Velg produkter</legend>
+      <div class="check-grid">
+        <% products.forEach(function (p) { %>
+          <label><input type="checkbox" name="scopeSlugs" value="<%= p.slug %>" <%= c && (c.scope.slugs || []).includes(p.slug) ? 'checked' : '' %>> <%= p.name %></label>
+        <% }) %>
+      </div>
+    </fieldset>
+    <div class="check-row">
+      <label><input type="checkbox" name="active" <%= !c || c.active ? 'checked' : '' %>> Aktiv</label>
+    </div>
+    <button class="admin-btn admin-btn-primary" type="submit">Lagre kampanje</button>
+    <a class="admin-btn" href="/admin/kampanjer">Avbryt</a>
+  </form>
+</section>
+<%- include('partials/bottom') %>

@@ -1,0 +1,33 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="page-head">
+  <div class="wrap">
+    <h1><%= heading %></h1>
+    <nav class="filter-chips" aria-label="Kategorifilter">
+      <a class="chip <%= !activeCategory ? 'is-active' : '' %>" href="/produkter" <%= !activeCategory ? 'aria-current="page"' : '' %>>Alle</a>
+      <% Object.entries(categories).forEach(function ([key, label]) { %>
+        <a class="chip <%= activeCategory === key ? 'is-active' : '' %>" href="/produkter/<%= key %>" <%= activeCategory === key ? 'aria-current="page"' : '' %>><%= label %></a>
+      <% }) %>
+    </nav>
+    <% if (tier) { %>
+      <p class="member-note">Du ser prisene som <strong><%= club.tiers[tier].label %></strong>-medlem (demo). <a href="/demo/medlem/av">Vis ordinære priser</a></p>
+    <% } %>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <% if (products.length === 0) { %>
+      <p>Ingen produkter i denne kategorien ennå.</p>
+    <% } else { %>
+      <div class="product-grid">
+        <% products.forEach(function (p) { %>
+          <%- include('partials/product-card', { p, pr: prices[p.slug] }) %>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
