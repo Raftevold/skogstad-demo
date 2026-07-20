@@ -18,6 +18,12 @@
       <img src="/images/logo-skogstad.svg" alt="Skogstad" width="150" height="28">
     </a>
     <nav id="hovednav" class="main-nav" aria-label="Hovedmeny">
+      <div class="main-nav-head">
+        <img src="/images/logo-skogstad-hvit.svg" alt="Skogstad" width="130" height="24">
+        <button class="nav-close" type="button" aria-label="Lukk menyen">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+        </button>
+      </div>
       <ul>
         <li><a href="/produkter/barn" <%= path.startsWith('/produkter/barn') ? 'aria-current="page"' : '' %>>Barn 1–8</a></li>
         <li><a href="/produkter/junior" <%= path.startsWith('/produkter/junior') ? 'aria-current="page"' : '' %>>Junior 10–16</a></li>
@@ -26,7 +32,19 @@
         <li><a href="/kundeklubb" <%= path === '/kundeklubb' ? 'aria-current="page"' : '' %>>Kundeklubb</a></li>
         <li><a href="/om-oss" <%= path === '/om-oss' ? 'aria-current="page"' : '' %>>Om oss</a></li>
       </ul>
+      <div class="main-nav-extra">
+        <p class="main-nav-label">Mer fra Skogstad</p>
+        <ul class="main-nav-secondary">
+          <li><a href="/butikker">Finn butikk</a></li>
+          <li><a href="/baerekraft">Bærekraft</a></li>
+          <li><a href="/kundeservice">Kundeservice</a></li>
+        </ul>
+        <a class="btn btn-primary main-nav-cta" href="/kundeklubb">Bli medlem – få 15 %</a>
+        <p class="main-nav-foot">Innvik i Nordfjord · siden 1937</p>
+      </div>
+      <svg class="main-nav-ridge" viewBox="0 0 320 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 L0 40 L40 18 L80 34 L120 8 L160 28 L200 4 L240 24 L280 12 L320 30 L320 60 Z" fill="rgba(255,255,255,0.06)"/></svg>
     </nav>
+    <div class="nav-scrim" aria-hidden="true"></div>
     <div class="header-actions">
       <button class="icon-btn" data-open-search aria-label="Søk i produkter">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.5-5.5"/></svg>

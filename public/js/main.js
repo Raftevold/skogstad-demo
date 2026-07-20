@@ -130,15 +130,19 @@ document.querySelectorAll('[data-auto-submit]').forEach((sel) => {
   const btn = document.querySelector('.nav-toggle');
   const nav = document.getElementById('hovednav');
   if (!btn || !nav) return;
+  const scrim = document.querySelector('.nav-scrim');
+  const closeBtn = nav.querySelector('.nav-close');
   function setOpen(open) {
     nav.classList.toggle('is-open', open);
+    if (scrim) scrim.classList.toggle('is-open', open);
     btn.setAttribute('aria-expanded', String(open));
     document.body.classList.toggle('nav-locked', open);
   }
   btn.addEventListener('click', () => setOpen(!nav.classList.contains('is-open')));
-  document.addEventListener('click', (e) => {
-    if (nav.classList.contains('is-open') && !nav.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-  });
+  if (closeBtn) closeBtn.addEventListener('click', () => { setOpen(false); btn.focus(); });
+  if (scrim) scrim.addEventListener('click', () => { setOpen(false); btn.focus(); });
+  // Lukk når ein lenke i menyen blir vald
+  nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && nav.classList.contains('is-open')) {
       setOpen(false);
