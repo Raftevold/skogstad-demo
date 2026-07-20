@@ -107,6 +107,19 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
   });
 })();
 
+/* ---------- Stadfesting etter byte av medlemsnivå (demo) ---------- */
+(function () {
+  const m = document.cookie.match(/(?:^|;\s*)tier_msg=([a-z]+)/);
+  if (!m) return;
+  document.cookie = 'tier_msg=; Path=/; Max-Age=0; SameSite=Lax';
+  const labels = { medlem: 'Medlem', solv: 'Sølv', gull: 'Gull' };
+  setTimeout(() => {
+    toast(m[1] === 'av'
+      ? 'Demo: du ser nå ordinære priser.'
+      : `Demo: du ser nå prisene som ${labels[m[1]] || m[1]}-medlem – merk prisene i butikken.`);
+  }, 350);
+})();
+
 /* ---------- Sortering: send skjema ved val ---------- */
 document.querySelectorAll('[data-auto-submit]').forEach((sel) => {
   sel.addEventListener('change', () => sel.form.submit());

@@ -36,6 +36,8 @@ app.use(express.static(path.join(__dirname, '..', 'public'), {
 // Tryggingshovud + noindex i demo-modus
 app.use((req, res, next) => {
   res.locals.asset = asset;
+  // HTML er personalisert (prisar avheng av medlems-cookie) og skal aldri mellomlagrast
+  res.setHeader('Cache-Control', 'private, no-cache');
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
@@ -100,11 +102,15 @@ function seo(res, page, extra = {}) {
 app.get('/demo/medlem/:tier', (req, res) => {
   const t = req.params.tier;
   const back = (req.get('referer') && new URL(req.get('referer'), 'http://x').pathname) || '/';
+  const cookies = [];
   if (t === 'av') {
-    res.setHeader('Set-Cookie', 'demo_tier=; Path=/; Max-Age=0; SameSite=Lax');
+    cookies.push('demo_tier=; Path=/; Max-Age=0; SameSite=Lax');
+    cookies.push('tier_msg=av; Path=/; Max-Age=15; SameSite=Lax');
   } else if (VALID_TIERS.includes(t)) {
-    res.setHeader('Set-Cookie', `demo_tier=${t}; Path=/; Max-Age=86400; SameSite=Lax`);
+    cookies.push(`demo_tier=${t}; Path=/; Max-Age=86400; SameSite=Lax`);
+    cookies.push(`tier_msg=${t}; Path=/; Max-Age=15; SameSite=Lax`);
   }
+  if (cookies.length) res.setHeader('Set-Cookie', cookies);
   res.redirect(back);
 });
 
