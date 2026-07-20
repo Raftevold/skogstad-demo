@@ -282,7 +282,7 @@ function toast(msg) {
     q('[data-sum-total]').textContent = data.sum + ',-';
     const pts = q('[data-sum-points]');
     pts.hidden = !data.tier;
-    if (data.tier) pts.textContent = 'Du tjener ' + data.points + ' bonuspoeng på dette kjøpet.';
+    if (data.tier) pts.textContent = 'Du tjener ' + data.points + ' bonuspoeng på dette kjøpet' + (data.pointsValue > 0 ? ' – verdt ≈ ' + data.pointsValue + ' kr i bonussjekk.' : '.');
     const tierEl = q('[data-sum-tier]');
     tierEl.hidden = !!data.tier;
     if (!data.tier) tierEl.textContent = 'Tips: bruk «Se medlemspris»-bryteren øverst for å se medlemsprisene dine.';

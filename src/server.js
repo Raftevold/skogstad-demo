@@ -309,11 +309,12 @@ app.post('/api/handlekurv/quote', async (req, res, next) => {
       ordinarySum += price.ordinary * qty;
       points += price.points * qty;
     }
-    const freeShipping = tier && club.tiers[tier] && club.tiers[tier].freeShipping;
+    const tierConf = tier && club.tiers[tier] ? club.tiers[tier] : null;
     res.json({
       ok: true, lines, sum, ordinarySum, saved: ordinarySum - sum, points,
-      tier, tierLabel: tier ? club.tiers[tier].label : null,
-      freeShipping: !!freeShipping,
+      pointsValue: tierConf ? Math.round(points * (tierConf.checkPer1000 || 0) / 1000) : 0,
+      tier, tierLabel: tierConf ? tierConf.label : null,
+      freeShipping: !!(tierConf && tierConf.freeShipping),
     });
   } catch (e) { next(e); }
 });

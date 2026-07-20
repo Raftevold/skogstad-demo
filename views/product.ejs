@@ -33,7 +33,7 @@
         </p>
         <% if (price.campaignName) { %><p class="price-campaign"><%= price.campaignName.replace(' [DEMO-EKSEMPEL]', '') %><%= price.memberOnly ? ' (kun medlemmer)' : '' %></p><% } %>
         <% if (tier) { %>
-          <p class="price-points">Du tjener <strong><%= price.points %> bonuspoeng</strong> på dette kjøpet (<%= club.tiers[tier].label %>: <%= price.bonusPercent %> % bonus).</p>
+          <p class="price-points">Du tjener <strong><%= price.points %> bonuspoeng</strong><% if (price.pointsValue > 0) { %> – verdt ≈ <%= price.pointsValue %> kr i bonussjekk<% } %> (<%= club.tiers[tier].label %>: <%= price.bonusPercent %> % bonus, 1 poeng per krone).</p>
         <% } else { %>
           <% const best = Math.min(tierPrices.medlem.final, tierPrices.solv.final, tierPrices.gull.final); %>
           <% if (best < anonPrice.final) { %>

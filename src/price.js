@@ -45,9 +45,12 @@ function resolvePrice(product, tier, campaigns, club, now = new Date()) {
   }
   if (!best.name) trace[0].applied = true;
 
-  // Bonuspoeng: 1 poeng per krone av betalt pris (kjelde: kundeklubb-info)
+  // Bonuspoeng: 1 poeng per krone av betalt pris (kjelde: kundeklubb-info).
+  // pointsValue = kva poenga er verde i bonussjekk (1000 poeng = checkPer1000 kr).
   const points = tier ? Math.round(best.price * (club.pointsPerKrone || 1)) : 0;
-  const bonusPercent = tier && club.tiers[tier] ? club.tiers[tier].bonusPercent : 0;
+  const tierConf = tier && club.tiers[tier] ? club.tiers[tier] : null;
+  const bonusPercent = tierConf ? tierConf.bonusPercent : 0;
+  const pointsValue = tierConf ? Math.round(points * (tierConf.checkPer1000 || 0) / 1000) : 0;
 
   return {
     ordinary,
@@ -56,6 +59,7 @@ function resolvePrice(product, tier, campaigns, club, now = new Date()) {
     memberOnly: best.memberOnly,
     campaignName: best.name,
     points,
+    pointsValue,
     bonusPercent,
     trace,
   };

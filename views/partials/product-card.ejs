@@ -23,6 +23,6 @@
       <span class="price-now <%= pr.discountPercent > 0 ? 'is-sale' : '' %>"><%= pr.final %>,-</span>
       <% if (pr.discountPercent > 0) { %><s class="price-before"><%= pr.ordinary %>,-</s><% } %>
     </p>
-    <% if (pr.points > 0) { %><p class="product-card-points">+ <%= pr.points %> bonuspoeng</p><% } %>
+    <% if (pr.points > 0) { %><p class="product-card-points">+ <%= pr.points %> bonuspoeng<% if (pr.pointsValue > 0) { %> (≈ <%= pr.pointsValue %> kr)<% } %></p><% } %>
   </div>
 </a>
