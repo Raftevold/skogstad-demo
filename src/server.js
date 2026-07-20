@@ -6,6 +6,7 @@ const store = require('./store');
 const { seedIfEmpty } = require('./seed');
 const { resolvePrice, priceMap } = require('./price');
 const { themeCss } = require('./theme');
+const { asset } = require('./assets');
 const adminRouter = require('./admin');
 
 const app = express();
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, '..', 'public'), {
 
 // Tryggingshovud + noindex i demo-modus
 app.use((req, res, next) => {
+  res.locals.asset = asset;
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
