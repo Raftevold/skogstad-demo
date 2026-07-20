@@ -130,14 +130,18 @@ document.querySelectorAll('[data-auto-submit]').forEach((sel) => {
   const btn = document.querySelector('.nav-toggle');
   const nav = document.getElementById('hovednav');
   if (!btn || !nav) return;
-  btn.addEventListener('click', () => {
-    const open = nav.classList.toggle('is-open');
+  function setOpen(open) {
+    nav.classList.toggle('is-open', open);
     btn.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('nav-locked', open);
+  }
+  btn.addEventListener('click', () => setOpen(!nav.classList.contains('is-open')));
+  document.addEventListener('click', (e) => {
+    if (nav.classList.contains('is-open') && !nav.contains(e.target) && !btn.contains(e.target)) setOpen(false);
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && nav.classList.contains('is-open')) {
-      nav.classList.remove('is-open');
-      btn.setAttribute('aria-expanded', 'false');
+      setOpen(false);
       btn.focus();
     }
   });

@@ -125,8 +125,13 @@ a:hover { color: var(--green-950); }
 .site-header {
   position: sticky; top: 0; z-index: 100;
   background: rgba(250, 248, 244, 0.92);
-  backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(18, 36, 25, 0.08);
+}
+/* Blur ligg på eit pseudo-element: backdrop-filter direkte på headeren ville
+   gjort at position:fixed-menyen blir rekna relativt til headeren (Chrome). */
+.site-header::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  backdrop-filter: blur(10px);
 }
 .header-inner { display: flex; align-items: center; gap: 20px; min-height: 64px; }
 .logo { flex-shrink: 0; display: flex; }
@@ -618,8 +623,10 @@ a:hover { color: var(--green-950); }
     position: fixed; top: 0; left: 0; bottom: 0; width: min(320px, 85vw); z-index: 150;
     background: #fff; box-shadow: var(--shadow-lift); padding: 84px 20px 20px;
     transform: translateX(-105%); transition: transform 0.3s var(--ease);
+    overflow-y: auto;
   }
   .main-nav.is-open { transform: none; }
+  body.nav-locked { overflow: hidden; }
   .main-nav ul { flex-direction: column; }
   .main-nav a { font-size: 1.1rem; padding: 12px 16px; }
   .member-label { display: none; }
